@@ -140,6 +140,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
           <div id="uaText">（读取中…）</div>
         </div>
         <div id="calibStatus">📦 游动盒：小房间 2.6×1.8×2.6 m · 安全盒模式（进 AR 后会尝试用平面 / 命中测试自动校准）</div>
+        <div id="scanStatus" style="font-size:12.5px;margin-top:8px;padding:8px 12px;border-radius:12px;background:var(--pill);border:1px solid var(--line);line-height:1.5">🕸 环境网格：初始化中…</div>
       </div>
       <div class="controls">
         <button class="btn btn-primary" id="enterAR">🥽 进入 AR（Aura / Android XR）</button>
@@ -154,6 +155,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
         <button class="btn btn-ghost room-btn" data-room="l">大 5 m</button>
         <button class="btn btn-ghost room-btn" data-room="u">无界</button>
         <button class="btn btn-ghost" id="toggleBox">▦ 隐藏边界框</button>
+        <button class="btn btn-ghost" id="toggleScan">🕸 隐藏环境网格</button>
       </div>
       <div class="handrow">
         <span class="chip" id="handL">✋ 左手：未识别</span>
@@ -168,7 +170,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
           <li><b>戴上 Aura</b> <span>— 确保眼镜已连接手机 / 主机</span></li>
           <li><b>用眼镜里的 Chrome 打开本页</b> <span>— 就是你现在看的这个链接</span></li>
           <li><b>点预览下方「进入 AR」</b> <span>— 在画面下方按钮排里；若进不去，它会逐级重试并把真实报错大字显示出来，照按钮上方的检测清单对照即可</span></li>
-          <li><b>允许相机 / 空间权限</b> <span>— 鱼群会出现在你前方约 1.2 米、1.4 米高处，透过眼镜能同时看到真实房间</span></li>
+          <li><b>允许相机 / 空间权限</b> <span>— 进入后会按你当时的头部位置自动校准高度，鱼群以你视线高度略下方为中心出现在前方；环视四周，环境网格会用实测命中点逐渐织出来</span></li>
         </ol>
         <div class="kv">
           <div><b>16</b><small>条小鱼（为帧率略减）</small></div>
@@ -192,6 +194,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
           <li><b>安全游动盒</b> — 以启动时你的位置为中心的可调盒子（小 2.6 m / 中 3.6 m / 大 5 m / 无界），鱼群在接近边界时被转向力强制折返，绝不游出；盒子用淡青色线框标出，可一键隐藏</li>
           <li><b>平面 / 网格探测</b> — 进 AR 时请求 plane-detection 与 mesh-detection，设备若提供检测结果，就据此收紧游动盒并在状态区标注「已校准」；拿不到就静默用安全盒，不报错</li>
           <li><b>Hit Test + 深度辅助</b> — 周期性向视线前方做命中测试（并尝试深度采样），探测到比盒子更近的墙面时，收紧对应方向的边界</li>
+          <li><b>环境网状结构图（新增）</b> — AR 里同时向 7 个方向持续做命中测试，实测命中点积累成青色点阵 + 近邻连线的网，环视越久织得越密，另有贴合游动盒底部的地面网格；设备若提供 mesh-detection 则直接渲染真实网格线框；预览里显示的是模拟房间线框示意。这仍是实测近似的可视化，不是 DeepMesh 全量扫描</li>
         </ul>
         <p style="margin-top:8px">想要真正的 DeepMesh 全房间扫描，只能转<b>原生 Android XR（Jetpack XR / ARCore Scene Understanding）APK</b> 路线——那是另一个工程，WebXR 这条路给不了。</p>
       </div>
@@ -328,6 +331,32 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   aquarium.position.set(0,0,-1.2);
   scene.add(aquarium);
   var CENTER=new THREE.Vector3(0,1.4,-1.2);
+  // Live aquarium centre. In preview it stays at CENTER; in XR it is re-anchored
+  // from the first head pose, because a 'local' reference space puts y=0 near the
+  // head (not the floor) -- absolute floor-based heights would float overhead.
+  var AC=new THREE.Vector3(0,1.4,-1.2);
+  var AC0=AC.clone();
+  var needAnchor=false, floorSettled=true, refMode='local';
+  var anchoredDecor=[]; // {obj, base} static decor shifted by (AC-AC0)
+  var _lastAnchorDelta=new THREE.Vector3();
+  function applyAnchor(){
+    var d=new THREE.Vector3().copy(AC).sub(AC0);
+    var step=new THREE.Vector3().copy(d).sub(_lastAnchorDelta); _lastAnchorDelta.copy(d);
+    anchoredDecor.forEach(function(it){ it.obj.position.copy(it.base).add(d); });
+    bubbles.forEach(function(bb){ bb.obj.position.add(step); });
+    food.forEach(function(fd){ fd.obj.position.add(step); });
+    if(typeof syncBoxToAC==='function') syncBoxToAC();
+    if(typeof placeArGrid==='function') placeArGrid();
+  }
+  function syncBoxToAC(){ swimBox.cx=AC.x; swimBox.cy=AC.y; swimBox.cz=AC.z; buildBoxHelper(); if(boxHelper) boxHelper.visible=boxVisible; }
+  function anchorFromHead(){
+    var head=camera.position;
+    var fwd=new THREE.Vector3(); camera.getWorldDirection(fwd); fwd.y=0;
+    if(fwd.lengthSq()<0.05) fwd.set(0,0,-1); fwd.normalize();
+    if(refMode==='local-floor'){ AC.set(head.x+fwd.x*0.45, 1.35, head.z+fwd.z*0.45); }
+    else { AC.set(head.x+fwd.x*0.45, head.y-0.18, head.z+fwd.z*0.45); }
+    applyAnchor();
+  }
 
   // --- Swim box (room containment) ---
   // WebXR on Android XR has NO mesh detection (still experimental) and plane detection
@@ -335,7 +364,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   // Containment = adjustable safe box centred on the start position + opportunistic
   // tightening from plane-detection / mesh-detection / hit-test / depth when available.
   var swimBox={hw:1.3,hh:0.9,hd:1.3,cx:0,cy:1.4,cz:-1.2,unbounded:false,label:'小房间 2.6×1.8×2.6 m'};
-  var boxVisible=true, boxHelper=null, calibKind='', frameCount=0, hitTestSource=null;
+  var boxVisible=true, boxHelper=null, calibKind='', frameCount=0, hitTestSource=null, probeSources=[], scanPoints=[], scanSource='';
   function clampToBox(p, margin){
     if(swimBox.unbounded||!p) return p;
     var m=margin||0;
@@ -404,7 +433,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
         var hits=frame.getHitTestResults(hitTestSource);
         if(hits && hits.length){
           var hp=hits[0].getPose(refSpace);
-          if(hp) tightenFromPoint(hp.transform.position, 'hit');
+          if(hp){ tightenFromPoint(hp.transform.position, 'hit'); addScanPoint(hp.transform.position); }
         }
       }
     }catch(e){}
@@ -433,21 +462,56 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
 
   // --- Fish factory (procedural, low-poly) ---
   var palette=[0xff7a29,0x2fb3ff,0xff6fb5,0x9b7bff,0xffd93d,0x3ddc97,0xff5a5a];
-  function createFish(color, scale){
+  function createFish(color, scale, pattern){
     var g=new THREE.Group();
-    var bodyGeo=new THREE.SphereGeometry(0.09,10,8); bodyGeo.scale(1.7,1,0.65);
-    var body=new THREE.Mesh(bodyGeo, mat(color,0.4)); g.add(body);
-    // tail: cone flattened
-    var tailGeo=new THREE.ConeGeometry(0.07,0.11,6); tailGeo.scale(1,1,0.25);
-    var tail=new THREE.Mesh(tailGeo, mat(color,0.5));
-    tail.rotation.z=Math.PI/2; tail.position.set(-0.19,0,0); g.add(tail);
-    g.userData.tail=tail;
-    // dorsal fin
-    var finGeo=new THREE.ConeGeometry(0.035,0.07,4);
-    var fin=new THREE.Mesh(finGeo, mat(0xffffff,0.6)); fin.position.set(0,0.09,0); fin.material.transparent=true; fin.material.opacity=0.85; g.add(fin);
-    // eyes
-    var eyeGeo=new THREE.SphereGeometry(0.014,6,6); var eyeMat=new THREE.MeshBasicMaterial({color:0x111111});
-    [-1,1].forEach(function(s){ var e=new THREE.Mesh(eyeGeo,eyeMat); e.position.set(0.10,0.025,0.052*s); g.add(e); });
+    var white=new THREE.Color(0xffffff);
+    // Body: sphere tapered toward the tail, vertex-coloured (belly lighter,
+    // optional clown stripes / tail fade) so fish read as fish, not blobs.
+    var geo=new THREE.SphereGeometry(0.095,24,16);
+    var posA=geo.attributes.position;
+    var cols=new Float32Array(posA.count*3);
+    var baseCol=new THREE.Color(color); var tmpC=new THREE.Color(); var dark=new THREE.Color(0x16242c);
+    for(var vi=0;vi<posA.count;vi++){
+      var x0=posA.getX(vi), y0=posA.getY(vi), z0=posA.getZ(vi);
+      var nx=x0/0.095;
+      var tf=1;
+      if(nx<0) tf=1-0.38*Math.pow(-nx,1.5);
+      else if(nx>0.55) tf=1-0.16*Math.pow((nx-0.55)/0.45,2);
+      posA.setX(vi, x0*1.9); posA.setY(vi, y0*tf); posA.setZ(vi, z0*tf*0.92);
+      tmpC.copy(baseCol);
+      if(y0<0) tmpC.lerp(white, Math.min(0.45, (-y0/0.095)*0.45));
+      if(y0>0.05) tmpC.lerp(dark, 0.18);
+      if(pattern===1 && ((nx>0.10&&nx<0.34)||(nx>-0.45&&nx<-0.22)||nx>0.62)) tmpC.copy(white).lerp(baseCol,0.08);
+      if(pattern===2 && nx<-0.3) tmpC.lerp(white, Math.min(0.5, (-nx-0.3)*0.6));
+      cols[vi*3]=tmpC.r; cols[vi*3+1]=tmpC.g; cols[vi*3+2]=tmpC.b;
+    }
+    geo.setAttribute('color', new THREE.BufferAttribute(cols,3));
+    geo.computeVertexNormals();
+    var bodyMat=new THREE.MeshStandardMaterial({vertexColors:true, roughness:0.32, metalness:0.18});
+    g.add(new THREE.Mesh(geo, bodyMat));
+    var finCol=new THREE.Color(color).lerp(white,0.3);
+    var finMat=new THREE.MeshStandardMaterial({color:finCol, roughness:0.5, metalness:0.05, transparent:true, opacity:0.92, side:THREE.DoubleSide});
+    // Tail fin: fan with a notch, pivots at its root so it can sweep side to side
+    var tailPivot=new THREE.Group(); tailPivot.position.set(-0.165,0,0); g.add(tailPivot);
+    var tShape=new THREE.Shape();
+    tShape.moveTo(0,0.045); tShape.quadraticCurveTo(-0.06,0.085,-0.095,0.105); tShape.quadraticCurveTo(-0.075,0.03,-0.068,0.0); tShape.quadraticCurveTo(-0.075,-0.03,-0.095,-0.105); tShape.quadraticCurveTo(-0.06,-0.085,0,-0.045); tShape.closePath();
+    var tailMesh=new THREE.Mesh(new THREE.ShapeGeometry(tShape), finMat); tailPivot.add(tailMesh);
+    g.userData.tail=tailPivot;
+    // Dorsal fin: slim curved triangle on top
+    var dShape=new THREE.Shape(); dShape.moveTo(-0.06,0); dShape.quadraticCurveTo(0.0,0.085,0.065,0.002); dShape.closePath();
+    var dorsal=new THREE.Mesh(new THREE.ShapeGeometry(dShape), finMat); dorsal.position.set(-0.005,0.078,0); g.add(dorsal);
+    // Pectoral fins: one per side, flap gently while swimming
+    var fins=[];
+    [-1,1].forEach(function(sd){
+      var fShape=new THREE.Shape(); fShape.moveTo(0,0); fShape.quadraticCurveTo(-0.07,-0.03,-0.085,-0.065); fShape.quadraticCurveTo(-0.025,-0.055,0.018,-0.045); fShape.closePath();
+      var fg=new THREE.Group(); fg.position.set(0.035,-0.025,0.052*sd); fg.rotation.x=0.85*sd; fg.userData.baseX=0.85*sd;
+      var fm=new THREE.Mesh(new THREE.ShapeGeometry(fShape), finMat); fg.add(fm); g.add(fg); fins.push(fg);
+    });
+    g.userData.fins=fins;
+    // Eyes with a glint
+    var eyeGeo=new THREE.SphereGeometry(0.017,8,8); var eyeMat=new THREE.MeshBasicMaterial({color:0x0b1418});
+    var glintGeo=new THREE.SphereGeometry(0.006,6,6); var glintMat=new THREE.MeshBasicMaterial({color:0xffffff});
+    [-1,1].forEach(function(sd){ var e=new THREE.Mesh(eyeGeo,eyeMat); e.position.set(0.115,0.028,0.055*sd); g.add(e); var gl=new THREE.Mesh(glintGeo,glintMat); gl.position.set(0.122,0.036,0.062*sd); g.add(gl); });
     g.scale.setScalar(scale||1);
     return g;
   }
@@ -455,24 +519,24 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   // 16 small fish (trimmed from 21 to keep frame rate with the new species)
   for(var i=0;i<16;i++){
     var c=palette[i%palette.length];
-    var f=createFish(c, 0.75+Math.random()*0.6);
+    var f=createFish(c, 0.75+Math.random()*0.6, i%3);
     var angle=Math.random()*Math.PI*2, radius=0.35+Math.random()*0.65, y=1.05+Math.random()*0.75;
     f.position.set(Math.cos(angle)*radius, y, -1.2+Math.sin(angle)*radius*0.7);
     scene.add(f);
-    fishes.push({obj:f, tail:f.userData.tail, angle:angle, radius:radius, baseY:y, speed:0.25+Math.random()*0.45, wobble:Math.random()*10, scale:f.scale.x, mode:'swim', foodTarget:null, hunger:Math.random()});
+    fishes.push({obj:f, tail:f.userData.tail, fins:f.userData.fins||[], angle:angle, radius:radius, baseY:y, relY:y-1.4, speed:0.25+Math.random()*0.45, wobble:Math.random()*10, scale:f.scale.x, mode:'swim', foodTarget:null, hunger:Math.random()});
   }
 
   // --- Turtles x2: shell with pattern patches, 4 paddling flippers, slow grand circles ---
   var turtles=[];
   function createTurtle(scale){
     var g=new THREE.Group();
-    var shellM=new THREE.Mesh(new THREE.SphereGeometry(0.20,12,10), mat(0x2e8b6e,0.6)); shellM.scale.set(1.25,0.55,1); g.add(shellM);
+    var shellM=new THREE.Mesh(new THREE.SphereGeometry(0.20,20,14), mat(0x2e8b6e,0.6)); shellM.scale.set(1.25,0.55,1); g.add(shellM);
     var patchMat=mat(0x1f6b4f,0.65);
     [[0,0.105,0,0.09],[0.11,0.09,0.07,0.06],[-0.11,0.09,-0.07,0.06],[0.02,0.095,-0.11,0.055],[-0.05,0.095,0.11,0.055]].forEach(function(pp){
       var pm=new THREE.Mesh(new THREE.SphereGeometry(pp[3],8,6), patchMat); pm.scale.set(1.2,0.32,1); pm.position.set(pp[0],pp[1],pp[2]); g.add(pm);
     });
     var bellyM=new THREE.Mesh(new THREE.SphereGeometry(0.17,10,8), mat(0xd9e8a3,0.7)); bellyM.scale.set(1.2,0.4,0.95); bellyM.position.y=-0.03; g.add(bellyM);
-    var headM=new THREE.Mesh(new THREE.SphereGeometry(0.075,8,8), mat(0x3aa67f,0.6)); headM.position.set(0.28,0.02,0); g.add(headM);
+    var headM=new THREE.Mesh(new THREE.SphereGeometry(0.075,12,10), mat(0x3aa67f,0.6)); headM.position.set(0.28,0.02,0); g.add(headM);
     var fls=[];
     [[0.14,0.14],[0.14,-0.14],[-0.15,0.13],[-0.15,-0.13]].forEach(function(p){
       var fl=new THREE.Mesh(new THREE.SphereGeometry(0.07,6,5), mat(0x3aa67f,0.6)); fl.scale.set(1.4,0.25,0.7); fl.position.set(p[0],-0.02,p[1]); g.add(fl); fls.push(fl);
@@ -483,14 +547,14 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   }
   [[1.15,0.12,0.62,1.12],[0.8,0.09,0.85,1.55]].forEach(function(cfg,idx){
     var tg=createTurtle(cfg[0]); scene.add(tg);
-    turtles.push({obj:tg, flippers:tg.userData.flippers, speed:cfg[1], radius:cfg[2], baseY:cfg[3], phase:idx*2.6});
+    turtles.push({obj:tg, flippers:tg.userData.flippers, speed:cfg[1], radius:cfg[2], baseY:cfg[3], relY:cfg[3]-1.4, phase:idx*2.6});
   });
 
   // --- Mini whale (~0.8 m long): slow grand circle, tail fluke beats up/down, occasional rise ---
   var whale=new THREE.Group();
-  var wBodyGeo=new THREE.SphereGeometry(0.16,14,10); wBodyGeo.scale(2.6,1.05,0.92);
+  var wBodyGeo=new THREE.SphereGeometry(0.16,22,16); wBodyGeo.scale(2.6,1.05,0.92);
   whale.add(new THREE.Mesh(wBodyGeo, mat(0x4a7fb5,0.5)));
-  var wBellyGeo=new THREE.SphereGeometry(0.145,12,8); wBellyGeo.scale(2.4,0.8,0.85);
+  var wBellyGeo=new THREE.SphereGeometry(0.145,20,14); wBellyGeo.scale(2.4,0.8,0.85);
   var wBelly=new THREE.Mesh(wBellyGeo, mat(0xdceef7,0.7)); wBelly.position.y=-0.045; whale.add(wBelly);
   var wTail=new THREE.Group(); wTail.position.set(-0.40,0.01,0); whale.add(wTail);
   var wPedGeo=new THREE.SphereGeometry(0.07,8,6); wPedGeo.scale(1.6,0.8,0.7);
@@ -511,15 +575,15 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   function createJelly(color, scale){
     var g=new THREE.Group();
     var domeMat=new THREE.MeshStandardMaterial({color:color,roughness:0.25,metalness:0,transparent:true,opacity:0.5,emissive:color,emissiveIntensity:0.55,side:THREE.DoubleSide});
-    var dome=new THREE.Mesh(new THREE.SphereGeometry(0.11,14,10,0,Math.PI*2,0,Math.PI*0.55), domeMat); g.add(dome);
+    var dome=new THREE.Mesh(new THREE.SphereGeometry(0.11,22,16,0,Math.PI*2,0,Math.PI*0.55), domeMat); g.add(dome);
     var core=new THREE.Mesh(new THREE.SphereGeometry(0.05,8,8), new THREE.MeshBasicMaterial({color:color,transparent:true,opacity:0.8}));
     core.position.y=-0.01; g.add(core);
     var tentMat=new THREE.MeshStandardMaterial({color:color,roughness:0.4,transparent:true,opacity:0.65,emissive:color,emissiveIntensity:0.35});
     var tents=[];
-    for(var ti=0;ti<7;ti++){
+    for(var ti=0;ti<9;ti++){
       var tGeo=new THREE.CylinderGeometry(0.004,0.0015,0.24,5); tGeo.translate(0,-0.12,0);
       var tm=new THREE.Mesh(tGeo,tentMat);
-      var a=ti/7*Math.PI*2; tm.position.set(Math.cos(a)*0.055,-0.03,Math.sin(a)*0.055);
+      var a=ti/9*Math.PI*2; tm.position.set(Math.cos(a)*0.055,-0.03,Math.sin(a)*0.055);
       g.add(tm); tents.push(tm);
     }
     var arm=new THREE.Mesh(new THREE.ConeGeometry(0.035,0.16,7), tentMat); arm.position.y=-0.1; arm.rotation.x=Math.PI; g.add(arm); tents.push(arm);
@@ -530,7 +594,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   [[0x8be9ff,0.35,1.5,-1.0],[0xc39bff,-0.45,1.75,-1.55],[0xff9ad5,0.05,1.3,-0.75]].forEach(function(cfg,idx){
     var j=createJelly(cfg[0], 0.9+idx*0.15);
     j.position.set(cfg[1],cfg[2],cfg[3]); scene.add(j);
-    jellies.push({obj:j, dome:j.userData.dome, core:j.userData.core, tents:j.userData.tents, baseY:cfg[2], phase:idx*2.1, cx:cfg[1], cz:cfg[3]});
+    jellies.push({obj:j, dome:j.userData.dome, core:j.userData.core, tents:j.userData.tents, baseY:cfg[2], relY:cfg[2]-1.4, relX:cfg[1], relZ:cfg[3]+1.2, phase:idx*2.1, cx:cfg[1], cz:cfg[3]});
   });
 
   // --- Starfish x5: extruded 5-point stars resting at the bottom, rotating very slowly ---
@@ -549,7 +613,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
     return new THREE.Mesh(geo, mat(0xff8c42,0.85));
   }
   [[-0.7,-0.8],[0.55,-1.75],[0.85,-0.95],[-0.25,-1.9],[0.1,-0.62]].forEach(function(p,idx){
-    var s=createStar(); s.position.set(p[0],0.575,p[1]); s.rotation.y=idx*1.3; scene.add(s);
+    var s=createStar(); s.position.set(p[0],0.575,p[1]); s.rotation.y=idx*1.3; scene.add(s); anchoredDecor.push({obj:s, base:s.position.clone()});
     stars.push({obj:s, speed:0.03+idx*0.008});
   });
 
@@ -568,7 +632,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   for(var p=0;p<pCount;p++){ pPos[p*3]=(Math.random()-0.5)*2.4; pPos[p*3+1]=0.5+Math.random()*1.8; pPos[p*3+2]=-1.2+(Math.random()-0.5)*1.6; }
   var pGeo=new THREE.BufferGeometry(); pGeo.setAttribute('position', new THREE.BufferAttribute(pPos,3));
   var plankton=new THREE.Points(pGeo, new THREE.PointsMaterial({color:0xaef4ff,size:0.018,transparent:true,opacity:0.75}));
-  scene.add(plankton);
+  scene.add(plankton); anchoredDecor.push({obj:plankton, base:new THREE.Vector3(0,0,0)});
 
   // --- Seaweed & coral at bottom (y ~0.55 in preview, floats below fish) ---
   var weedMat=mat(0x1db584,0.7), weedMat2=mat(0x0ea47a,0.7);
@@ -576,7 +640,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
     var h=0.28+Math.random()*0.35;
     var weed=new THREE.Mesh(new THREE.CylinderGeometry(0.008,0.016,h,5), w%2?weedMat:weedMat2);
     weed.position.set((Math.random()-0.5)*1.7, 0.55+h/2, -1.2+(Math.random()-0.5)*1.1);
-    scene.add(weed); weeds.push({obj:weed, phase:Math.random()*10, h:h});
+    scene.add(weed); weeds.push({obj:weed, phase:Math.random()*10, h:h}); anchoredDecor.push({obj:weed, base:weed.position.clone()});
   }
   var coralCols=[0xff7a9e,0xff9a3d,0xff6b6b];
   for(var ci=0;ci<9;ci++){
@@ -588,11 +652,11 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
       branch.rotation.z=(Math.random()-0.5)*0.7; coral.add(branch);
     }
     coral.position.set((Math.random()-0.5)*1.6,0.56,-1.2+(Math.random()-0.5)*1.0);
-    scene.add(coral); corals.push(coral);
+    scene.add(coral); corals.push(coral); anchoredDecor.push({obj:coral, base:coral.position.clone()});
   }
   // Soft floor disc to anchor in preview (very transparent)
   var disc=new THREE.Mesh(new THREE.CircleGeometry(1.05,28), new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.10,side:THREE.DoubleSide}));
-  disc.rotation.x=-Math.PI/2; disc.position.set(0,0.54,-1.2); scene.add(disc);
+  disc.rotation.x=-Math.PI/2; disc.position.set(0,0.54,-1.2); scene.add(disc); anchoredDecor.push({obj:disc, base:disc.position.clone()});
 
   clock=new THREE.Clock();
   resize();
@@ -600,7 +664,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   // --- Feeding ---
   var foodGeo=new THREE.SphereGeometry(0.016,6,6); var foodMat=new THREE.MeshBasicMaterial({color:0xffb020});
   function spawnFood(origin){
-    var base=origin||new THREE.Vector3((Math.random()-0.5)*0.5, 2.05, -1.2+(Math.random()-0.5)*0.4);
+    var base=origin||new THREE.Vector3(AC.x+(Math.random()-0.5)*0.5, AC.y+0.65, AC.z+(Math.random()-0.5)*0.4);
     for(var k=0;k<14;k++){
       var m=new THREE.Mesh(foodGeo,foodMat);
       m.position.copy(base).add(new THREE.Vector3((Math.random()-0.5)*0.35,(Math.random())*0.15,(Math.random()-0.5)*0.35));
@@ -693,6 +757,11 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   }
   function startSession(session, mode){
     currentSession=session; sessionMode=mode;
+    // Anchor the aquarium to the head pose on the first XR frames: with a 'local'
+    // space y=0 sits near the head, so floor-assumed heights would float overhead.
+    // Prefer 'local-floor' (true floor heights) when the device grants it.
+    needAnchor=true; floorSettled=false; refMode='local';
+    try{ session.requestReferenceSpace('local-floor').then(function(rs){ try{ renderer.xr.setReferenceSpace(rs); refMode='local-floor'; }catch(e){} floorSettled=true; }).catch(function(){ floorSettled=true; }); }catch(e){ floorSettled=true; }
     document.getElementById('modeLabel').textContent= mode==='immersive-vr' ? 'VR 兜底模式 · 捏合投喂 · 挥手召唤全息鱼' : 'AR 模式 · 挥手召唤全息鱼 · 捏合投喂';
     if(mode==='immersive-vr'){ scene.background=new THREE.Color(0x0d4a66); setStatus('✅ <b>已通过 immersive-vr 兜底进入</b>（此设备未提供 immersive-ar 会话）。水族馆内容完全相同，背景为虚拟海水；退出后点「进入 AR」可重试 AR。'); }
     else setStatus('✅ <b>AR 已启动！</b> 鱼群就在你身边：捏合投喂、挥手召唤全息鱼。页面会同时尝试用平面 / 命中测试 / 深度来校准游动盒，拿不到就用安全盒。');
@@ -703,7 +772,8 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
       spawnFood(pos);
     });
     session.addEventListener('end',function(){
-      currentSession=null; sessionMode=''; hitTestSource=null;
+      currentSession=null; sessionMode=''; hitTestSource=null; probeSources=[]; scanPoints=[]; scanSource='';
+      needAnchor=false; AC.copy(AC0); applyAnchor(); rebuildScanViz();
       scene.background=null;
       handState.left.lastPos=null; handState.right.lastPos=null;
       setHandChip('left',false); setHandChip('right',false);
@@ -712,7 +782,16 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
     });
     // Hit-test source (viewer space) for wall-distance tightening of the swim box.
     // Fully optional: any failure here just leaves the safe box in place.
-    session.requestReferenceSpace('viewer').then(function(vs){ return session.requestHitTestSource({space:vs}); }).then(function(src){ hitTestSource=src; }).catch(function(){});
+    session.requestReferenceSpace('viewer').then(function(vs){
+      try{
+        if(typeof XRRay!=='undefined'){
+          [[0,0,-1],[1,0,-0.35],[-1,0,-0.35],[0.7,0,-0.7],[-0.7,0,-0.7],[0,-1,-0.3],[0,0.4,-1]].forEach(function(d){
+            try{ session.requestHitTestSource({space:vs, offsetRay:new XRRay({x:0,y:0,z:0},{x:d[0],y:d[1],z:d[2]})}).then(function(src2){ probeSources.push(src2); }).catch(function(){}); }catch(e){}
+          });
+        }
+      }catch(e){}
+      return session.requestHitTestSource({space:vs});
+    }).then(function(src){ hitTestSource=src; }).catch(function(){});
     renderer.xr.setSession(session);
   }
   arBtn.addEventListener('click',function(){
@@ -761,6 +840,99 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
       tryNext(0);
     });
   });
+
+
+  // --- Environment mesh visualisation (honest version) ---
+  // Real DeepMesh is NOT exposed to WebXR on Android XR. What is shown instead:
+  // (a) wireframes of real detected meshes IF the device provides
+  //     frame.detectedMeshes, and (b) a web woven from measured hit-test points
+  //     accumulated from 7 probe rays as the user looks around.
+  // In preview, a simulated triangulated room stands in so it can be tested.
+  var scanVisible=true;
+  var scanGroup=new THREE.Group(); scene.add(scanGroup);
+  var simGroup=new THREE.Group(); scanGroup.add(simGroup);
+  var arGroup=new THREE.Group(); scanGroup.add(arGroup);
+  var dynGroup=new THREE.Group(); arGroup.add(dynGroup);
+  var meshGroup=new THREE.Group(); arGroup.add(meshGroup);
+  var simRoom=new THREE.LineSegments(new THREE.WireframeGeometry(new THREE.BoxGeometry(3.4,2.4,3.4)), new THREE.LineBasicMaterial({color:0x36e0d0,transparent:true,opacity:0.28}));
+  simRoom.position.set(0,1.75,-1.2); simGroup.add(simRoom);
+  var simGrid=new THREE.GridHelper(3.4,10,0x36e0d0,0x1d7a72); simGrid.material.transparent=true; simGrid.material.opacity=0.3; simGrid.position.set(0,0.56,-1.2); simGroup.add(simGrid);
+  var arGrid=new THREE.GridHelper(2.6,8,0x36e0d0,0x1d7a72); arGrid.material.transparent=true; arGrid.material.opacity=0.32; arGroup.add(arGrid);
+  function placeArGrid(){ if(arGrid) arGrid.position.set(AC.x, AC.y-0.86, AC.z); }
+  placeArGrid();
+  var scanStatusEl=document.getElementById('scanStatus');
+  function setScan(txt){ if(scanStatusEl) scanStatusEl.textContent=txt; }
+  function addScanPoint(p){
+    if(!p) return;
+    var v=new THREE.Vector3(p.x,p.y,p.z);
+    if(v.distanceTo(camera.position)>6) return;
+    for(var i=0;i<scanPoints.length;i++){ if(scanPoints[i].distanceToSquared(v)<0.02) return; }
+    scanPoints.push(v);
+    if(scanPoints.length>240) scanPoints.shift();
+    if(scanSource!=='mesh'){ scanSource='hit'; setScan('🕸 环境网格：命中测试实测点 '+scanPoints.length+' 个 · 环视四周会继续加密（实测近似，非 DeepMesh）'); }
+    rebuildScanViz();
+  }
+  function rebuildScanViz(){
+    while(dynGroup.children.length){ var ch=dynGroup.children.pop(); dynGroup.remove(ch); if(ch.geometry) ch.geometry.dispose(); }
+    if(!scanPoints.length) return;
+    var arr=new Float32Array(scanPoints.length*3);
+    scanPoints.forEach(function(v,i){ arr[i*3]=v.x; arr[i*3+1]=v.y; arr[i*3+2]=v.z; });
+    var pg=new THREE.BufferGeometry(); pg.setAttribute('position', new THREE.BufferAttribute(arr,3));
+    dynGroup.add(new THREE.Points(pg, new THREE.PointsMaterial({color:0x7df9ff,size:0.035,transparent:true,opacity:0.95})));
+    var linePts=[]; var pairs=0;
+    for(var i=0;i<scanPoints.length && pairs<800;i++){
+      for(var j=i+1;j<scanPoints.length && pairs<800;j++){
+        if(scanPoints[i].distanceToSquared(scanPoints[j])<0.72){ linePts.push(scanPoints[i].x,scanPoints[i].y,scanPoints[i].z, scanPoints[j].x,scanPoints[j].y,scanPoints[j].z); pairs++; }
+      }
+    }
+    if(linePts.length){
+      var lg=new THREE.BufferGeometry(); lg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(linePts),3));
+      dynGroup.add(new THREE.LineSegments(lg, new THREE.LineBasicMaterial({color:0x36e0d0,transparent:true,opacity:0.45})));
+    }
+    var low=scanPoints.filter(function(v){ return v.y<AC.y-0.5; });
+    if(low.length>=3){
+      low.sort(function(a,b){ return Math.atan2(a.z-AC.z,a.x-AC.x)-Math.atan2(b.z-AC.z,b.x-AC.x); });
+      var rg=new THREE.BufferGeometry().setFromPoints(low);
+      dynGroup.add(new THREE.LineLoop(rg, new THREE.LineBasicMaterial({color:0xaef4ff,transparent:true,opacity:0.8})));
+    }
+  }
+  function renderDetectedMeshes(frame){
+    try{
+      var meshes=frame.detectedMeshes;
+      if(!meshes||!meshes.size) return false;
+      var refSpace=renderer.xr.getReferenceSpace();
+      while(meshGroup.children.length){ var c0=meshGroup.children.pop(); meshGroup.remove(c0); }
+      meshes.forEach(function(m){
+        try{
+          var pose=frame.getPose(m.meshSpace, refSpace); if(!pose) return;
+          var g2=new THREE.BufferGeometry();
+          g2.setAttribute('position', new THREE.BufferAttribute(new Float32Array(m.vertices),3));
+          if(m.indices) g2.setIndex(new THREE.BufferAttribute(new Uint32Array(m.indices),1));
+          var wf=new THREE.LineSegments(new THREE.WireframeGeometry(g2), new THREE.LineBasicMaterial({color:0x7df9ff,transparent:true,opacity:0.5}));
+          wf.applyMatrix4(new THREE.Matrix4().fromArray(pose.transform.matrix));
+          meshGroup.add(wf);
+        }catch(e){}
+      });
+      if(meshGroup.children.length){ scanSource='mesh'; setScan('🕸 环境网格：已渲染设备提供的真实网格线框（mesh-detection）'); return true; }
+      return false;
+    }catch(e){ return false; }
+  }
+  function updateScan(frame){
+    var refSpace=renderer.xr.getReferenceSpace();
+    probeSources.forEach(function(src){
+      try{
+        var hits=frame.getHitTestResults(src);
+        if(hits && hits.length){ var hp=hits[0].getPose(refSpace); if(hp) addScanPoint(hp.transform.position); }
+      }catch(e){}
+    });
+    renderDetectedMeshes(frame);
+  }
+  var toggleScanBtn=document.getElementById('toggleScan');
+  if(toggleScanBtn) toggleScanBtn.addEventListener('click',function(){
+    scanVisible=!scanVisible;
+    toggleScanBtn.textContent=scanVisible?'🕸 隐藏环境网格':'🕸 显示环境网格';
+  });
+  setScan('🕸 环境网格：预览中显示模拟房间线框；进 AR 后用 7 方向命中测试的实测点织网（设备提供网格时渲染真实线框）');
 
   // --- Holographic gesture fish + sparkle bursts ---
   var gestureFish=[], sparkleBursts=[];
@@ -855,14 +1027,18 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
     // XR per-frame: dual-hand tracking every frame; room calibration attempts ~2×/s
     if(frame && renderer.xr.isPresenting){
       try{ updateHands(frame); }catch(e){}
+      if(needAnchor && floorSettled){
+        try{ anchorFromHead(); needAnchor=false; setStatus('✅ <b>AR 已启动，并按你当前的头部位置校准了水族馆的高度与位置</b>（参考空间：'+refMode+'）。鱼群以你视线高度略下方为中心；环视四周时，下面的环境网格会用命中测试的实测点逐渐织出来。'); }catch(e){}
+      }
       frameCount++;
-      if(frameCount%30===0){ try{ tryCalibrate(frame); }catch(e){} }
+      if(frameCount%30===0){ try{ tryCalibrate(frame); }catch(e){} try{ updateScan(frame); }catch(e){} }
     }
+    if(scanGroup){ scanGroup.visible=scanVisible; simGroup.visible=!renderer.xr.isPresenting; arGroup.visible=renderer.xr.isPresenting; }
 
     // Food physics
     for(var fi=food.length-1;fi>=0;fi--){
       var fd=food[fi]; fd.vy+=dt*0.25; fd.obj.position.y-=fd.vy*dt*0.6; fd.obj.position.x+=Math.sin(t*3+fi)*0.0006; fd.life-=dt;
-      if(fd.obj.position.y<0.62 || fd.life<=0){ scene.remove(fd.obj); food.splice(fi,1); }
+      if(fd.obj.position.y<AC.y-0.78 || fd.life<=0){ scene.remove(fd.obj); food.splice(fi,1); }
     }
     var hasFood=food.length>0;
     if(!hasFood){ fishes.forEach(function(fh){ if(fh.mode==='eat') fh.mode='swim'; }); }
@@ -879,7 +1055,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
         if(best<0.012){ /* consumed visually by proximity */ }
       } else {
         var r=fh.radius + Math.sin(t*0.5+fh.wobble)*0.08;
-        target=tmpV.set(Math.cos(fh.angle)*r, fh.baseY+Math.sin(t*0.9+fh.wobble)*0.10, -1.2+Math.sin(fh.angle)*r*0.72);
+        target=tmpV.set(AC.x+Math.cos(fh.angle)*r, AC.y+fh.relY+Math.sin(t*0.9+fh.wobble)*0.10, AC.z+Math.sin(fh.angle)*r*0.72);
       }
       clampToBox(target,0.12); // steering target never leaves the swim box → fish turn back at the walls
       // steer
@@ -896,6 +1072,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
       if(dist>0.01){ var look=tmpV.copy(fh.obj.position).add(tmpV2); fh.obj.lookAt(look); }
       // tail wiggle
       if(fh.tail){ fh.tail.rotation.y=Math.sin(t*10+fh.wobble)*0.55; fh.tail.rotation.x=Math.sin(t*10+fh.wobble)*0.12; }
+      if(fh.fins){ fh.fins.forEach(function(fn,fi2){ fn.rotation.x=fn.userData.baseX+Math.sin(t*6+fh.wobble+fi2*Math.PI)*0.35; }); }
       fh.obj.position.y+=Math.sin(t*2+fh.wobble)*0.0007;
       clampToBox(fh.obj.position,0.04); // hard guarantee: never outside the box
     });
@@ -903,19 +1080,19 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
     // Turtles: slow circles + flipper paddle, kept inside the box
     turtles.forEach(function(tu){
       var ta=t*tu.speed+tu.phase;
-      tu.obj.position.set(Math.cos(ta)*tu.radius, tu.baseY+Math.sin(t*0.6+tu.phase)*0.05, -1.2+Math.sin(ta)*tu.radius*0.72);
+      tu.obj.position.set(AC.x+Math.cos(ta)*tu.radius, AC.y+tu.relY+Math.sin(t*0.6+tu.phase)*0.05, AC.z+Math.sin(ta)*tu.radius*0.72);
       clampToBox(tu.obj.position,0.25);
       var na=(t+0.3)*tu.speed+tu.phase;
-      tmpV.set(Math.cos(na)*tu.radius, tu.obj.position.y, -1.2+Math.sin(na)*tu.radius*0.72);
+      tmpV.set(AC.x+Math.cos(na)*tu.radius, tu.obj.position.y, AC.z+Math.sin(na)*tu.radius*0.72);
       tu.obj.lookAt(tmpV);
       tu.flippers.forEach(function(fl,i){ fl.rotation.z=Math.sin(t*2.2+tu.phase+i*1.2)*0.45; });
     });
 
     // Whale: slow grand circle, gentle rise & sink, tail fluke beats up/down
     var wa=t*0.07, wn=(t+0.4)*0.07;
-    whale.position.set(Math.cos(wa)*0.95, 1.5+Math.sin(t*0.21)*0.28, -1.2+Math.sin(wa)*0.72);
+    whale.position.set(AC.x+Math.cos(wa)*0.95, AC.y+0.1+Math.sin(t*0.21)*0.28, AC.z+Math.sin(wa)*0.72);
     clampToBox(whale.position,0.3);
-    tmpV.set(Math.cos(wn)*0.95, 1.5+Math.sin((t+0.4)*0.21)*0.28, -1.2+Math.sin(wn)*0.72);
+    tmpV.set(AC.x+Math.cos(wn)*0.95, AC.y+0.1+Math.sin((t+0.4)*0.21)*0.28, AC.z+Math.sin(wn)*0.72);
     whale.lookAt(tmpV);
     wTail.rotation.z=Math.sin(t*1.6)*0.38;
     wFins.forEach(function(fm,i){ fm.rotation.z=Math.sin(t*1.6+i*Math.PI)*0.25; });
@@ -925,9 +1102,9 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
       var pulse=Math.sin(t*2.2+jl.phase);
       jl.dome.scale.set(1+0.13*pulse, 1-0.16*pulse, 1+0.13*pulse);
       jl.core.scale.setScalar(1+0.2*pulse);
-      jl.obj.position.y=jl.baseY+Math.sin(t*0.45+jl.phase)*0.16-pulse*0.02;
-      jl.obj.position.x=jl.cx+Math.sin(t*0.11+jl.phase)*0.14;
-      jl.obj.position.z=jl.cz+Math.cos(t*0.09+jl.phase)*0.10;
+      jl.obj.position.y=AC.y+jl.relY+Math.sin(t*0.45+jl.phase)*0.16-pulse*0.02;
+      jl.obj.position.x=AC.x+jl.relX+Math.sin(t*0.11+jl.phase)*0.14;
+      jl.obj.position.z=AC.z+jl.relZ+Math.cos(t*0.09+jl.phase)*0.10;
       clampToBox(jl.obj.position,0.15);
       jl.tents.forEach(function(tm,ti){ tm.rotation.x=Math.sin(t*1.7+jl.phase+ti*0.9)*0.28; tm.rotation.z=Math.cos(t*1.5+jl.phase+ti*0.7)*0.28; });
     });
@@ -963,7 +1140,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
     }
 
     // Bubbles rise & loop
-    bubbles.forEach(function(bb){ bb.obj.position.y+=bb.speed*dt; bb.obj.position.x+=Math.sin(t*1.5+bb.drift)*0.0008; if(bb.obj.position.y>2.25){ bb.obj.position.y=0.58; bb.obj.position.x=(Math.random()-0.5)*1.6; } });
+    bubbles.forEach(function(bb){ bb.obj.position.y+=bb.speed*dt; bb.obj.position.x+=Math.sin(t*1.5+bb.drift)*0.0008; if(bb.obj.position.y>AC.y+0.85){ bb.obj.position.y=AC.y-0.82; bb.obj.position.x=AC.x+(Math.random()-0.5)*1.6; bb.obj.position.z=AC.z+(Math.random()-0.5)*1.1; } });
     // Plankton drift
     plankton.rotation.y=t*0.02; plankton.position.y=Math.sin(t*0.4)*0.03;
     // Seaweed sway
@@ -973,7 +1150,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   }
   renderer.setAnimationLoop(animate);
   // initial feed demo after 1.2s so preview feels alive (no toast spam: suppress first)
-  setTimeout(function(){ /* small initial food */ for(var k=0;k<6;k++){ var m=new THREE.Mesh(foodGeo,foodMat); m.position.set((Math.random()-0.5)*0.4,1.9,-1.2+(Math.random()-0.5)*0.3); scene.add(m); food.push({obj:m,vy:0,life:5}); } fishes.forEach(function(f){ if(Math.random()>0.4) f.mode='eat'; }); },1200);
+  setTimeout(function(){ /* small initial food */ for(var k=0;k<6;k++){ var m=new THREE.Mesh(foodGeo,foodMat); m.position.set(AC.x+(Math.random()-0.5)*0.4,AC.y+0.5,AC.z+(Math.random()-0.5)*0.3); scene.add(m); food.push({obj:m,vy:0,life:5}); } fishes.forEach(function(f){ if(Math.random()>0.4) f.mode='eat'; }); },1200);
 })();
 </script>
 </body>
