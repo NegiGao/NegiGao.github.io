@@ -108,7 +108,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   </div>
 
   <h1>Aerial Aquarium <span>空中水族館はあなたのそばを泳ぐ</span></h1>
-  <p class="lead">没有玻璃、没有水箱——一整群鱼直接漂浮在你的客厅、办公室里。你站在鱼群旁边，它们绕着你游、躲开你的头、追着鱼食跑。在 Aura 眼镜里是真 AR，在手机 / 电脑上也能先 3D 预览。这一版还加了：双手挥手召唤发光全息小鱼、把鱼群关进房间大小的「游动盒」，以及水母、海星和一只缩小版鲸鱼。</p>
+  <p class="lead">没有玻璃、没有水箱——一整群鱼直接漂浮在你的客厅、办公室里。你站在鱼群旁边，它们绕着你游、躲开你的头、追着鱼食跑。在 Aura 眼镜里是真 AR，在手机 / 电脑上也能先 3D 预览。这一版还加了：双手挥手召唤发光全息小鱼、把鱼群关进房间大小的「游动盒」，以及水母、海星和一只缩小版鲸鱼。<b>v4 精细版</b>：鱼身重塑出鳞光、侧线、鳃盖线、金色眼环和叉形尾，游动时脊柱呈波浪传导；新增 9 条霓虹灯鱼组成的整齐鱼群和 2 条神仙鱼；海龟壳纹、鲸鱼嘴线与双叶尾鳍、水母内脏器官、海葵与鹿角珊瑚、焦散纹地面和柔光光束都做了细节升级。</p>
 
   <div class="hero">
     <section class="viewer-card">
@@ -120,7 +120,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
         <!-- Three.js canvas injected here -->
         <div class="hud">
           <div class="hud-box"><b>怎么玩：</b> 预览里拖动看鱼群、<b>快速划动</b>召唤全息小鱼、点画面投喂；AR 里捏合投喂、<b>挥手</b>召唤全息鱼。所有生物只在淡青色游动盒里活动，不会游出房间。</div>
-          <div class="chip" id="fishCountChip">🐠 16 鱼 · 🐢 2 · 🪼 3 · 🐋 1 · ⭐ 5 · 🫧 84</div>
+          <div class="chip" id="fishCountChip">🐠 16 鱼 · ✨ 9 灯鱼群 · 🐡 2 神仙鱼 · 🐢 2 · 🪼 3 · 🐋 1 · ⭐ 5 · 🫧 84</div>
         </div>
         <div id="stageFail" role="alert">
           <div class="sf-title">⚠️ Three.js 未加载，3D 预览无法渲染</div>
@@ -173,7 +173,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
           <li><b>允许相机 / 空间权限</b> <span>— 进入后会按你当时的头部位置自动校准高度，鱼群以你视线高度略下方为中心出现在前方；环视四周，环境网格会用实测命中点逐渐织出来</span></li>
         </ol>
         <div class="kv">
-          <div><b>16</b><small>条小鱼（为帧率略减）</small></div>
+          <div><b>16 + 9 + 2</b><small>小鱼 · 霓虹灯鱼群 · 神仙鱼</small></div>
           <div><b>2 + 1</b><small>海龟 2 只 · 缩小版鲸鱼 1 只</small></div>
           <div><b>3 + 5</b><small>发光水母 3 只 · 海星 5 只</small></div>
           <div><b>2.6 m</b><small>默认安全游动盒（可调）</small></div>
@@ -214,9 +214,9 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   </div>
 
   <div class="grid3">
-    <div class="card feature"><div class="ico">🐋</div><h3>鲸鱼 + 双海龟</h3><p>一只约 0.8 米的缩小版鲸鱼慢速绕大圈、尾鳍上下摆、偶尔上浮；两只带壳纹的海龟划着鳍肢压阵，一大一小。</p></div>
-    <div class="card feature"><div class="ico">🪼</div><h3>水母与海星</h3><p>3 只半透明发光水母伞盖一收一放地脉动、触手波浪摆动，上下漂浮；5 只海星贴在底部缓缓旋转。</p></div>
-    <div class="card feature"><div class="ico">✨</div><h3>挥手召唤全息鱼</h3><p>双手 25 关节追踪，挥过的地方留下青蓝 / 紫色全息小鱼和闪光碎末，科幻感拉满；没眼镜时在预览里快速划动鼠标也能试。</p></div>
+    <div class="card feature"><div class="ico">🐋</div><h3>鲸鱼 + 双海龟</h3><p>约 0.8 米的鲸鱼有了渐变体色、嘴线、喷水孔、背鳍和带中央缺口的双叶尾鳍；海龟壳面是斑驳纹理加六角甲片与壳缘，脑袋会探动、眼睛带高光。</p></div>
+    <div class="card feature"><div class="ico">🪼</div><h3>水母与海星</h3><p>3 只水母是双层伞盖、发光伞缘和 4 团彩色内脏器官，21 条触手分内外两环波浪摆动；5 只海星五色各异，臂上有凸起的小颗粒。</p></div>
+    <div class="card feature"><div class="ico">✨</div><h3>挥手召唤全息鱼</h3><p>双手 25 关节追踪，挥过的地方留下青蓝 / 紫色全息小鱼和闪光碎末，科幻感拉满；没眼镜时在预览里快速划动鼠标也能试。另有 9 条霓虹灯鱼始终列队巡游，转弯时整群如一体。</p></div>
   </div>
 
   <footer>空中水族馆 · WebXR 版 — 在 Aura 上为真 AR 透视（passthrough），在手机 / 电脑上为同场景 3D 预览 · 建议在光线充足的室内体验，留意脚下安全</footer>
@@ -312,6 +312,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   renderer.xr.enabled=true;
   renderer.xr.setReferenceSpaceType('local');
   renderer.outputEncoding=THREE.sRGBEncoding;
+  if(THREE.ACESFilmicToneMapping!==undefined){ renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.12; }
   stage.insertBefore(renderer.domElement, stage.firstChild);
 
   function resize(){
@@ -325,6 +326,8 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   var ambient=new THREE.AmbientLight(0xbfefff,0.95); scene.add(ambient);
   var sun=new THREE.DirectionalLight(0xffffff,1.15); sun.position.set(2,4,2); scene.add(sun);
   var fill=new THREE.PointLight(0x66d9e8,0.7,8); fill.position.set(0,1.6,-1.2); scene.add(fill);
+  var hemi=new THREE.HemisphereLight(0xcfeeff,0x1a5a6e,0.55); scene.add(hemi);
+  var rim=new THREE.PointLight(0x9be8ff,0.45,7); rim.position.set(-1.6,2.2,0.6); scene.add(rim);
 
   // Aquarium group: centre in front of user
   aquarium=new THREE.Group();
@@ -464,54 +467,106 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   var palette=[0xff7a29,0x2fb3ff,0xff6fb5,0x9b7bff,0xffd93d,0x3ddc97,0xff5a5a];
   function createFish(color, scale, pattern){
     var g=new THREE.Group();
+    var spine=new THREE.Group(); g.add(spine); g.userData.spine=spine;
     var white=new THREE.Color(0xffffff);
-    // Body: sphere tapered toward the tail, vertex-coloured (belly lighter,
-    // optional clown stripes / tail fade) so fish read as fish, not blobs.
-    var geo=new THREE.SphereGeometry(0.095,24,16);
+    // Body v4: higher-res teardrop, sculpted profile (blunt head, deep mid-body,
+    // narrow caudal peduncle), vertex-coloured with belly lightening, dark back,
+    // a scale shimmer, a lateral line, and 6 species patterns.
+    var geo=new THREE.SphereGeometry(0.095,36,24);
     var posA=geo.attributes.position;
     var cols=new Float32Array(posA.count*3);
-    var baseCol=new THREE.Color(color); var tmpC=new THREE.Color(); var dark=new THREE.Color(0x16242c);
+    var baseCol=new THREE.Color(color); var tmpC=new THREE.Color(); var dark=new THREE.Color(0x14232b); var gold=new THREE.Color(0xffe9a8);
     for(var vi=0;vi<posA.count;vi++){
       var x0=posA.getX(vi), y0=posA.getY(vi), z0=posA.getZ(vi);
-      var nx=x0/0.095;
+      var nx=x0/0.095, ny=y0/0.095, nz=z0/0.095;
       var tf=1;
-      if(nx<0) tf=1-0.38*Math.pow(-nx,1.5);
-      else if(nx>0.55) tf=1-0.16*Math.pow((nx-0.55)/0.45,2);
-      posA.setX(vi, x0*1.9); posA.setY(vi, y0*tf); posA.setZ(vi, z0*tf*0.92);
+      if(nx<0) tf=1-0.46*Math.pow(-nx,1.6);            // taper hard toward tail
+      else if(nx>0.55) tf=1-0.20*Math.pow((nx-0.55)/0.45,2); // blunt round head
+      tf*=1+0.07*Math.exp(-Math.pow((nx-0.05)/0.28,2)); // deep mid-body bulge
+      var bellyLift=(ny<0&&nx>0.1)?0.006:0;              // slight belly sag at front
+      posA.setX(vi, x0*1.9); posA.setY(vi, y0*tf-bellyLift*Math.abs(ny)); posA.setZ(vi, z0*tf*0.88);
       tmpC.copy(baseCol);
-      if(y0<0) tmpC.lerp(white, Math.min(0.45, (-y0/0.095)*0.45));
-      if(y0>0.05) tmpC.lerp(dark, 0.18);
-      if(pattern===1 && ((nx>0.10&&nx<0.34)||(nx>-0.45&&nx<-0.22)||nx>0.62)) tmpC.copy(white).lerp(baseCol,0.08);
-      if(pattern===2 && nx<-0.3) tmpC.lerp(white, Math.min(0.5, (-nx-0.3)*0.6));
+      if(ny<0) tmpC.lerp(white, Math.min(0.52, (-ny)*0.52));       // pale belly
+      if(ny>0.35) tmpC.lerp(dark, 0.22*(ny-0.35)/0.65);            // darker back
+      // scale shimmer: fine checker on the flanks only
+      if(Math.abs(nz)>0.35){ var sh=1+0.05*Math.sin(nx*34+((ny>0)?2.1:0))*Math.sin(Math.atan2(z0,y0)*7+nx*6); tmpC.multiplyScalar(sh); }
+      // lateral line: faint dark seam along the mid-flank
+      if(Math.abs(nz)>0.72 && Math.abs(ny-0.02)<0.07) tmpC.lerp(dark,0.28);
+      if(pattern===1){ // clownfish: 3 white bands with dark rims
+        var band=(nx>0.10&&nx<0.32)||(nx>-0.48&&nx<-0.28)||nx>0.60;
+        var rim=(nx>=0.06&&nx<=0.10)||(nx>=0.32&&nx<=0.36)||(nx>=-0.52&&nx<=-0.48)||(nx>=-0.28&&nx<=-0.24)||(nx>=0.56&&nx<=0.60);
+        if(band) tmpC.copy(white).lerp(baseCol,0.06);
+        else if(rim) tmpC.lerp(dark,0.55);
+      }
+      else if(pattern===2 && nx<-0.25){ tmpC.lerp(white, Math.min(0.55, (-nx-0.25)*0.65)); } // tail fade
+      else if(pattern===3){ // vertical tiger stripes on the upper flank
+        if(ny>-0.15 && Math.sin(nx*15+1.2)>0.55) tmpC.lerp(dark,0.42);
+      }
+      else if(pattern===4){ // dappled spots (upper body)
+        var sa=Math.atan2(nz,ny);
+        if(ny>0.05 && Math.sin(nx*17+sa*2.0)>0.80) tmpC.copy(white).lerp(baseCol,0.25);
+        else if(ny>0.05 && Math.sin(nx*11-sa*3.0)>0.86) tmpC.lerp(dark,0.30);
+      }
+      else if(pattern===5){ // gold lateral stripe
+        if(Math.abs(nz)>0.60 && Math.abs(ny-0.03)<0.10) tmpC.copy(gold).lerp(baseCol,0.15);
+      }
       cols[vi*3]=tmpC.r; cols[vi*3+1]=tmpC.g; cols[vi*3+2]=tmpC.b;
     }
     geo.setAttribute('color', new THREE.BufferAttribute(cols,3));
     geo.computeVertexNormals();
-    var bodyMat=new THREE.MeshStandardMaterial({vertexColors:true, roughness:0.32, metalness:0.18});
-    g.add(new THREE.Mesh(geo, bodyMat));
-    var finCol=new THREE.Color(color).lerp(white,0.3);
-    var finMat=new THREE.MeshStandardMaterial({color:finCol, roughness:0.5, metalness:0.05, transparent:true, opacity:0.92, side:THREE.DoubleSide});
-    // Tail fin: fan with a notch, pivots at its root so it can sweep side to side
-    var tailPivot=new THREE.Group(); tailPivot.position.set(-0.165,0,0); g.add(tailPivot);
+    var bodyMat=new THREE.MeshStandardMaterial({vertexColors:true, roughness:0.28, metalness:0.22});
+    spine.add(new THREE.Mesh(geo, bodyMat));
+    // Caudal peduncle: tapered bridge so the tail fin grows out of the body
+    var pedGeo=new THREE.CylinderGeometry(0.020,0.036,0.075,10); pedGeo.rotateZ(Math.PI/2);
+    var ped=new THREE.Mesh(pedGeo, new THREE.MeshStandardMaterial({color:new THREE.Color(color).lerp(white,0.08), roughness:0.35, metalness:0.15}));
+    ped.position.set(-0.185,0,0); spine.add(ped);
+    var finCol=new THREE.Color(color).lerp(white,0.32);
+    var finMat=new THREE.MeshStandardMaterial({color:finCol, roughness:0.45, metalness:0.08, transparent:true, opacity:0.90, side:THREE.DoubleSide});
+    var finDark=new THREE.MeshStandardMaterial({color:new THREE.Color(color).lerp(dark,0.25), roughness:0.5, transparent:true, opacity:0.88, side:THREE.DoubleSide});
+    // Tail fin: deeper fork, swept tips
+    var tailPivot=new THREE.Group(); tailPivot.position.set(-0.205,0,0); g.add(tailPivot);
     var tShape=new THREE.Shape();
-    tShape.moveTo(0,0.045); tShape.quadraticCurveTo(-0.06,0.085,-0.095,0.105); tShape.quadraticCurveTo(-0.075,0.03,-0.068,0.0); tShape.quadraticCurveTo(-0.075,-0.03,-0.095,-0.105); tShape.quadraticCurveTo(-0.06,-0.085,0,-0.045); tShape.closePath();
-    var tailMesh=new THREE.Mesh(new THREE.ShapeGeometry(tShape), finMat); tailPivot.add(tailMesh);
+    tShape.moveTo(0,0.038); tShape.quadraticCurveTo(-0.055,0.075,-0.105,0.118); tShape.quadraticCurveTo(-0.082,0.045,-0.070,0.0); tShape.quadraticCurveTo(-0.082,-0.045,-0.105,-0.118); tShape.quadraticCurveTo(-0.055,-0.075,0,-0.038); tShape.closePath();
+    tailPivot.add(new THREE.Mesh(new THREE.ShapeGeometry(tShape,8), finMat));
+    // tail fin rays (3 fine lines fanning out)
+    var rayPts=[];
+    [[0.10,0.105],[0,0.085],[-0.10,-0.105]].forEach(function(tp){ rayPts.push(new THREE.Vector3(0,0,0.001), new THREE.Vector3(-0.098,tp[1]*0.92,0.001)); });
+    var rayGeo=new THREE.BufferGeometry().setFromPoints(rayPts);
+    tailPivot.add(new THREE.LineSegments(rayGeo, new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:0.30})));
     g.userData.tail=tailPivot;
-    // Dorsal fin: slim curved triangle on top
-    var dShape=new THREE.Shape(); dShape.moveTo(-0.06,0); dShape.quadraticCurveTo(0.0,0.085,0.065,0.002); dShape.closePath();
-    var dorsal=new THREE.Mesh(new THREE.ShapeGeometry(dShape), finMat); dorsal.position.set(-0.005,0.078,0); g.add(dorsal);
-    // Pectoral fins: one per side, flap gently while swimming
+    // Dorsal fin: taller, curved, darker edge tone
+    var dShape=new THREE.Shape(); dShape.moveTo(-0.085,0); dShape.quadraticCurveTo(-0.02,0.105,0.055,0.045); dShape.quadraticCurveTo(0.075,0.012,0.07,0.0); dShape.closePath();
+    var dorsal=new THREE.Mesh(new THREE.ShapeGeometry(dShape,8), finDark); dorsal.position.set(-0.008,0.080,0); spine.add(dorsal);
+    // Anal fin under the rear body
+    var aShape=new THREE.Shape(); aShape.moveTo(-0.07,0); aShape.quadraticCurveTo(-0.02,-0.062,0.045,-0.01); aShape.closePath();
+    var anal=new THREE.Mesh(new THREE.ShapeGeometry(aShape,6), finDark); anal.position.set(-0.03,-0.072,0); spine.add(anal);
+    // Pectoral fins: broader fans, flap while swimming
     var fins=[];
     [-1,1].forEach(function(sd){
-      var fShape=new THREE.Shape(); fShape.moveTo(0,0); fShape.quadraticCurveTo(-0.07,-0.03,-0.085,-0.065); fShape.quadraticCurveTo(-0.025,-0.055,0.018,-0.045); fShape.closePath();
-      var fg=new THREE.Group(); fg.position.set(0.035,-0.025,0.052*sd); fg.rotation.x=0.85*sd; fg.userData.baseX=0.85*sd;
-      var fm=new THREE.Mesh(new THREE.ShapeGeometry(fShape), finMat); fg.add(fm); g.add(fg); fins.push(fg);
+      var fShape=new THREE.Shape(); fShape.moveTo(0,0); fShape.quadraticCurveTo(-0.075,-0.018,-0.098,-0.058); fShape.quadraticCurveTo(-0.045,-0.068,0.005,-0.052); fShape.quadraticCurveTo(0.022,-0.03,0.012,-0.006); fShape.closePath();
+      var fg=new THREE.Group(); fg.position.set(0.038,-0.028,0.050*sd); fg.rotation.x=0.85*sd; fg.userData.baseX=0.85*sd;
+      fg.add(new THREE.Mesh(new THREE.ShapeGeometry(fShape,6), finMat)); g.add(fg); fins.push(fg);
     });
     g.userData.fins=fins;
-    // Eyes with a glint
-    var eyeGeo=new THREE.SphereGeometry(0.017,8,8); var eyeMat=new THREE.MeshBasicMaterial({color:0x0b1418});
-    var glintGeo=new THREE.SphereGeometry(0.006,6,6); var glintMat=new THREE.MeshBasicMaterial({color:0xffffff});
-    [-1,1].forEach(function(sd){ var e=new THREE.Mesh(eyeGeo,eyeMat); e.position.set(0.115,0.028,0.055*sd); g.add(e); var gl=new THREE.Mesh(glintGeo,glintMat); gl.position.set(0.122,0.036,0.062*sd); g.add(gl); });
+    // Pelvic fins: two tiny fans under the front belly
+    [-1,1].forEach(function(sd){
+      var pShape=new THREE.Shape(); pShape.moveTo(0,0); pShape.lineTo(-0.045,-0.038); pShape.lineTo(0.012,-0.030); pShape.closePath();
+      var pm=new THREE.Mesh(new THREE.ShapeGeometry(pShape), finMat); pm.position.set(0.045,-0.080,0.018*sd); pm.rotation.x=0.5*sd; spine.add(pm);
+    });
+    // Gill cover seam + eyes with gold iris ring and glint, tiny mouth
+    var gillMat=new THREE.MeshBasicMaterial({color:0x0e1c22,transparent:true,opacity:0.45,side:THREE.DoubleSide});
+    var eyeGeo=new THREE.SphereGeometry(0.019,10,10); var eyeMat=new THREE.MeshBasicMaterial({color:0x0b1418});
+    var ringGeo=new THREE.TorusGeometry(0.020,0.0032,6,18); var ringMat=new THREE.MeshBasicMaterial({color:0xffc94d});
+    var glintGeo=new THREE.SphereGeometry(0.0065,6,6); var glintMat=new THREE.MeshBasicMaterial({color:0xffffff});
+    [-1,1].forEach(function(sd){
+      var gill=new THREE.Mesh(new THREE.TorusGeometry(0.058,0.0026,5,14,1.25), gillMat);
+      gill.position.set(0.062,0.004,0.080*sd); gill.rotation.z=2.25; if(sd<0) gill.rotation.y=Math.PI; spine.add(gill);
+      var ring=new THREE.Mesh(ringGeo,ringMat); ring.position.set(0.118,0.030,0.056*sd); spine.add(ring);
+      var e=new THREE.Mesh(eyeGeo,eyeMat); e.position.set(0.118,0.030,0.058*sd); spine.add(e);
+      var gl=new THREE.Mesh(glintGeo,glintMat); gl.position.set(0.126,0.039,0.064*sd); spine.add(gl);
+    });
+    var mouth=new THREE.Mesh(new THREE.SphereGeometry(0.011,8,6), new THREE.MeshBasicMaterial({color:0x30181c}));
+    mouth.scale.set(0.5,0.75,1.15); mouth.position.set(0.178,-0.012,0); spine.add(mouth);
     g.scale.setScalar(scale||1);
     return g;
   }
@@ -519,27 +574,133 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   // 16 small fish (trimmed from 21 to keep frame rate with the new species)
   for(var i=0;i<16;i++){
     var c=palette[i%palette.length];
-    var f=createFish(c, 0.75+Math.random()*0.6, i%3);
+    var f=createFish(c, 0.75+Math.random()*0.6, i%6);
     var angle=Math.random()*Math.PI*2, radius=0.35+Math.random()*0.65, y=1.05+Math.random()*0.75;
     f.position.set(Math.cos(angle)*radius, y, -1.2+Math.sin(angle)*radius*0.7);
     scene.add(f);
-    fishes.push({obj:f, tail:f.userData.tail, fins:f.userData.fins||[], angle:angle, radius:radius, baseY:y, relY:y-1.4, speed:0.25+Math.random()*0.45, wobble:Math.random()*10, scale:f.scale.x, mode:'swim', foodTarget:null, hunger:Math.random()});
+    fishes.push({obj:f, tail:f.userData.tail, spine:f.userData.spine||null, fins:f.userData.fins||[], angle:angle, radius:radius, baseY:y, relY:y-1.4, speed:0.25+Math.random()*0.45, wobble:Math.random()*10, scale:f.scale.x, mode:'swim', foodTarget:null, hunger:Math.random()});
   }
+
+
+  // --- Neon tetra school x9: tiny elongated fish with a glowing cyan stripe and
+  // a red rear half; they hold a tight formation and turn as one body ---
+  var tetras=[];
+  function createTetra(){
+    var g=new THREE.Group();
+    var bodyGeo=new THREE.SphereGeometry(0.05,16,12); bodyGeo.scale(2.1,0.78,0.55);
+    var posA=bodyGeo.attributes.position; var cols=new Float32Array(posA.count*3);
+    var top=new THREE.Color(0x7fa8b8), belly=new THREE.Color(0xe8f4f2), red=new THREE.Color(0xff4440), tc=new THREE.Color();
+    for(var vi=0;vi<posA.count;vi++){
+      var nx=posA.getX(vi)/0.105, ny=posA.getY(vi)/0.039;
+      tc.copy(belly).lerp(top, Math.max(0,ny)*0.8+0.15);
+      if(nx<-0.15) tc.lerp(red, Math.min(0.9,(-nx-0.15)*1.1)); // red rear half
+      cols[vi*3]=tc.r; cols[vi*3+1]=tc.g; cols[vi*3+2]=tc.b;
+    }
+    bodyGeo.setAttribute('color', new THREE.BufferAttribute(cols,3)); bodyGeo.computeVertexNormals();
+    g.add(new THREE.Mesh(bodyGeo, new THREE.MeshStandardMaterial({vertexColors:true,roughness:0.3,metalness:0.25})));
+    // neon stripe: one thin glowing bar per flank
+    var stripeMat=new THREE.MeshBasicMaterial({color:0x54f0ff});
+    [-1,1].forEach(function(sd){
+      var st=new THREE.Mesh(new THREE.SphereGeometry(0.012,8,4), stripeMat);
+      st.scale.set(6.5,0.55,0.4); st.position.set(0.008,0.012,0.026*sd); g.add(st);
+      var e=new THREE.Mesh(new THREE.SphereGeometry(0.0075,6,6), new THREE.MeshBasicMaterial({color:0x0b1418}));
+      e.position.set(0.072,0.010,0.020*sd); g.add(e);
+    });
+    var tailPivot=new THREE.Group(); tailPivot.position.set(-0.10,0,0); g.add(tailPivot);
+    var tShape=new THREE.Shape(); tShape.moveTo(0,0.02); tShape.lineTo(-0.045,0.042); tShape.lineTo(-0.036,0); tShape.lineTo(-0.045,-0.042); tShape.lineTo(0,-0.02); tShape.closePath();
+    tailPivot.add(new THREE.Mesh(new THREE.ShapeGeometry(tShape), new THREE.MeshStandardMaterial({color:0xff6a5e,roughness:0.5,transparent:true,opacity:0.9,side:THREE.DoubleSide})));
+    g.userData.tail=tailPivot;
+    return g;
+  }
+  for(var ti2=0;ti2<9;ti2++){
+    var tf2=createTetra(); scene.add(tf2);
+    // diamond-ish formation offsets around the school centre
+    var row=Math.floor(ti2/3)-1, col2=(ti2%3)-1;
+    tetras.push({obj:tf2, tail:tf2.userData.tail, off:new THREE.Vector3(col2*0.16, row*0.10+Math.abs(col2)*0.03, (ti2%2?0.09:-0.09)+row*0.05), phase:ti2*0.9});
+  }
+
+  // --- Angelfish x2: tall disc body, black vertical bars, trailing fins ---
+  var angels=[];
+  function createAngelfish(baseColor){
+    var g=new THREE.Group(); var spine=new THREE.Group(); g.add(spine);
+    var geo=new THREE.SphereGeometry(0.11,24,20);
+    var posA=geo.attributes.position; var cols=new Float32Array(posA.count*3);
+    var base=new THREE.Color(baseColor), dark=new THREE.Color(0x10181d), white=new THREE.Color(0xffffff), tc=new THREE.Color();
+    for(var vi=0;vi<posA.count;vi++){
+      var x0=posA.getX(vi), y0=posA.getY(vi);
+      posA.setZ(vi, posA.getZ(vi)*0.30); posA.setY(vi, y0*1.22);
+      var nx=x0/0.11;
+      tc.copy(base); if(y0<0) tc.lerp(white,0.25);
+      if(Math.abs(nx-0.42)<0.10||Math.abs(nx+0.05)<0.11||Math.abs(nx+0.55)<0.09) tc.lerp(dark,0.78); // bars
+      cols[vi*3]=tc.r; cols[vi*3+1]=tc.g; cols[vi*3+2]=tc.b;
+    }
+    geo.setAttribute('color', new THREE.BufferAttribute(cols,3)); geo.computeVertexNormals();
+    spine.add(new THREE.Mesh(geo, new THREE.MeshStandardMaterial({vertexColors:true,roughness:0.35,metalness:0.2})));
+    var finMat=new THREE.MeshStandardMaterial({color:new THREE.Color(baseColor).lerp(dark,0.15),roughness:0.5,transparent:true,opacity:0.75,side:THREE.DoubleSide});
+    // long triangular dorsal + anal fins sweeping back
+    var dShape=new THREE.Shape(); dShape.moveTo(0.03,0); dShape.quadraticCurveTo(-0.10,0.16,-0.20,0.20); dShape.quadraticCurveTo(-0.12,0.05,-0.06,0.01); dShape.closePath();
+    var dorsal=new THREE.Mesh(new THREE.ShapeGeometry(dShape,6), finMat); dorsal.position.set(0,0.115,0); spine.add(dorsal);
+    var aShape=new THREE.Shape(); aShape.moveTo(0.03,0); aShape.quadraticCurveTo(-0.10,-0.16,-0.20,-0.20); aShape.quadraticCurveTo(-0.12,-0.05,-0.06,-0.01); aShape.closePath();
+    var anal=new THREE.Mesh(new THREE.ShapeGeometry(aShape,6), finMat); anal.position.set(0,-0.115,0); spine.add(anal);
+    var tailPivot=new THREE.Group(); tailPivot.position.set(-0.115,0,0); g.add(tailPivot);
+    var tShape=new THREE.Shape(); tShape.moveTo(0,0.045); tShape.lineTo(-0.075,0.065); tShape.lineTo(-0.06,0); tShape.lineTo(-0.075,-0.065); tShape.lineTo(0,-0.045); tShape.closePath();
+    tailPivot.add(new THREE.Mesh(new THREE.ShapeGeometry(tShape), finMat));
+    // trailing pelvic filaments
+    [-1,1].forEach(function(sd){
+      var filGeo=new THREE.CylinderGeometry(0.0016,0.0008,0.21,4); filGeo.translate(0,-0.105,0);
+      var fil=new THREE.Mesh(filGeo, finMat); fil.position.set(0.075,-0.09,0.012*sd); fil.rotation.z=0.35; spine.add(fil);
+      var e=new THREE.Mesh(new THREE.SphereGeometry(0.014,8,8), new THREE.MeshBasicMaterial({color:0x0b1418}));
+      e.position.set(0.082,0.028,0.030*sd); spine.add(e);
+    });
+    g.userData.tail=tailPivot; g.userData.spine=spine;
+    return g;
+  }
+  [[0xdfe8ee,0.95,0.55,1],[0xffc46b,0.80,0.42,-1]].forEach(function(cfg,idx){
+    var ag=createAngelfish(cfg[0]); ag.scale.setScalar(0.95); scene.add(ag);
+    angels.push({obj:ag, tail:ag.userData.tail, spine:ag.userData.spine, radius:cfg[1], speed:cfg[2]*0.14, dir:cfg[3], relY:(idx? -0.28:0.34), phase:idx*3.4});
+  });
 
   // --- Turtles x2: shell with pattern patches, 4 paddling flippers, slow grand circles ---
   var turtles=[];
   function createTurtle(scale){
     var g=new THREE.Group();
-    var shellM=new THREE.Mesh(new THREE.SphereGeometry(0.20,20,14), mat(0x2e8b6e,0.6)); shellM.scale.set(1.25,0.55,1); g.add(shellM);
-    var patchMat=mat(0x1f6b4f,0.65);
-    [[0,0.105,0,0.09],[0.11,0.09,0.07,0.06],[-0.11,0.09,-0.07,0.06],[0.02,0.095,-0.11,0.055],[-0.05,0.095,0.11,0.055]].forEach(function(pp){
-      var pm=new THREE.Mesh(new THREE.SphereGeometry(pp[3],8,6), patchMat); pm.scale.set(1.2,0.32,1); pm.position.set(pp[0],pp[1],pp[2]); g.add(pm);
+    // Shell v4: vertex-mottled dome + rim ring + hexagonal scutes in rows
+    var shellGeo=new THREE.SphereGeometry(0.20,26,18);
+    var posA=shellGeo.attributes.position; var cols=new Float32Array(posA.count*3);
+    var sTop=new THREE.Color(0x35795a), sEdge=new THREE.Color(0x1e5c40), sSpot=new THREE.Color(0x6d5a2e), tc=new THREE.Color();
+    for(var vi=0;vi<posA.count;vi++){
+      var x0=posA.getX(vi), y0=posA.getY(vi), z0=posA.getZ(vi);
+      tc.copy(sTop).lerp(sEdge, Math.min(1, Math.hypot(x0,z0)/0.22));
+      var m=Math.sin(x0*38)*Math.sin(z0*34+y0*20);
+      if(y0>0.05 && m>0.55) tc.lerp(sSpot,0.45); // mottled blotches
+      cols[vi*3]=tc.r; cols[vi*3+1]=tc.g; cols[vi*3+2]=tc.b;
+    }
+    shellGeo.setAttribute('color', new THREE.BufferAttribute(cols,3)); shellGeo.computeVertexNormals();
+    var shellM=new THREE.Mesh(shellGeo, new THREE.MeshStandardMaterial({vertexColors:true,roughness:0.5,metalness:0.08}));
+    shellM.scale.set(1.25,0.55,1); g.add(shellM);
+    var rimGeo=new THREE.TorusGeometry(0.195,0.016,8,28); rimGeo.rotateX(Math.PI/2);
+    var rim=new THREE.Mesh(rimGeo, mat(0x24543c,0.6)); rim.scale.set(1.25,1,1); rim.position.y=-0.005; g.add(rim);
+    var scuteMat=mat(0x2a6e4e,0.55);
+    [[0,0.108,0,0.085],[0.115,0.092,0,0.062],[-0.115,0.092,0,0.062],[0.06,0.096,0.105,0.055],[0.06,0.096,-0.105,0.055],[-0.07,0.096,0.10,0.052],[-0.07,0.096,-0.10,0.052]].forEach(function(pp){
+      var pm=new THREE.Mesh(new THREE.CylinderGeometry(pp[3],pp[3]*1.08,0.016,6), scuteMat);
+      pm.position.set(pp[0],pp[1],pp[2]); g.add(pm);
     });
-    var bellyM=new THREE.Mesh(new THREE.SphereGeometry(0.17,10,8), mat(0xd9e8a3,0.7)); bellyM.scale.set(1.2,0.4,0.95); bellyM.position.y=-0.03; g.add(bellyM);
-    var headM=new THREE.Mesh(new THREE.SphereGeometry(0.075,12,10), mat(0x3aa67f,0.6)); headM.position.set(0.28,0.02,0); g.add(headM);
+    var bellyM=new THREE.Mesh(new THREE.SphereGeometry(0.17,14,10), mat(0xe3edae,0.7)); bellyM.scale.set(1.2,0.4,0.95); bellyM.position.y=-0.03; g.add(bellyM);
+    // Head with eyes + glints, and a tiny tail
+    var headG=new THREE.Group(); headG.position.set(0.28,0.02,0); g.add(headG); g.userData.head=headG;
+    headG.add(new THREE.Mesh(new THREE.SphereGeometry(0.075,14,12), mat(0x3aa67f,0.55)));
+    [-1,1].forEach(function(sd){
+      var e=new THREE.Mesh(new THREE.SphereGeometry(0.012,8,8), new THREE.MeshBasicMaterial({color:0x0b1418}));
+      e.position.set(0.038,0.026,0.052*sd); headG.add(e);
+      var gl=new THREE.Mesh(new THREE.SphereGeometry(0.004,6,6), new THREE.MeshBasicMaterial({color:0xffffff}));
+      gl.position.set(0.044,0.032,0.058*sd); headG.add(gl);
+    });
+    var tailGeo=new THREE.ConeGeometry(0.02,0.07,8); tailGeo.rotateZ(Math.PI/2+0.25);
+    var tailM=new THREE.Mesh(tailGeo, mat(0x3aa67f,0.6)); tailM.position.set(-0.27,-0.01,0); g.add(tailM);
+    // Flippers: broad paddles in front, smaller ones behind
     var fls=[];
-    [[0.14,0.14],[0.14,-0.14],[-0.15,0.13],[-0.15,-0.13]].forEach(function(p){
-      var fl=new THREE.Mesh(new THREE.SphereGeometry(0.07,6,5), mat(0x3aa67f,0.6)); fl.scale.set(1.4,0.25,0.7); fl.position.set(p[0],-0.02,p[1]); g.add(fl); fls.push(fl);
+    [[0.15,0.15,1.0],[0.15,-0.15,1.0],[-0.16,0.13,0.72],[-0.16,-0.13,0.72]].forEach(function(p){
+      var fl=new THREE.Mesh(new THREE.SphereGeometry(0.075,10,8), mat(0x359e74,0.55)); fl.scale.set(1.55*p[2],0.22,0.78*p[2]); fl.position.set(p[0],-0.02,p[1]); g.add(fl); fls.push(fl);
     });
     g.scale.setScalar(scale);
     g.userData.flippers=fls;
@@ -547,48 +708,99 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   }
   [[1.15,0.12,0.62,1.12],[0.8,0.09,0.85,1.55]].forEach(function(cfg,idx){
     var tg=createTurtle(cfg[0]); scene.add(tg);
-    turtles.push({obj:tg, flippers:tg.userData.flippers, speed:cfg[1], radius:cfg[2], baseY:cfg[3], relY:cfg[3]-1.4, phase:idx*2.6});
+    turtles.push({obj:tg, head:tg.userData.head||null, flippers:tg.userData.flippers, speed:cfg[1], radius:cfg[2], baseY:cfg[3], relY:cfg[3]-1.4, phase:idx*2.6});
   });
 
-  // --- Mini whale (~0.8 m long): slow grand circle, tail fluke beats up/down, occasional rise ---
+  // --- Mini whale (~0.8 m) v4: gradient body, snout + mouth seam, dorsal fin,
+  // two-lobed fluke with a centre notch, shaped pectoral fins, glinting eyes ---
   var whale=new THREE.Group();
-  var wBodyGeo=new THREE.SphereGeometry(0.16,22,16); wBodyGeo.scale(2.6,1.05,0.92);
-  whale.add(new THREE.Mesh(wBodyGeo, mat(0x4a7fb5,0.5)));
-  var wBellyGeo=new THREE.SphereGeometry(0.145,20,14); wBellyGeo.scale(2.4,0.8,0.85);
-  var wBelly=new THREE.Mesh(wBellyGeo, mat(0xdceef7,0.7)); wBelly.position.y=-0.045; whale.add(wBelly);
+  var wBodyGeo=new THREE.SphereGeometry(0.16,30,22);
+  {
+    var posA=wBodyGeo.attributes.position; var cols=new Float32Array(posA.count*3);
+    var wTop=new THREE.Color(0x2f6690), wSide=new THREE.Color(0x4a86b8), wBel=new THREE.Color(0xe6f2f8), tc=new THREE.Color();
+    for(var vi=0;vi<posA.count;vi++){
+      var ny=posA.getY(vi)/0.16;
+      tc.copy(wSide); if(ny>0.2) tc.lerp(wTop,(ny-0.2)/0.8); if(ny<0) tc.lerp(wBel, Math.min(0.95,(-ny)*1.15));
+      cols[vi*3]=tc.r; cols[vi*3+1]=tc.g; cols[vi*3+2]=tc.b;
+    }
+    wBodyGeo.setAttribute('color', new THREE.BufferAttribute(cols,3));
+  }
+  wBodyGeo.scale(2.6,1.05,0.92); wBodyGeo.computeVertexNormals();
+  whale.add(new THREE.Mesh(wBodyGeo, new THREE.MeshStandardMaterial({vertexColors:true,roughness:0.42,metalness:0.12})));
+  var wSnoutGeo=new THREE.SphereGeometry(0.115,18,12); wSnoutGeo.scale(1.15,0.72,0.88);
+  var wSnout=new THREE.Mesh(wSnoutGeo, mat(0x558cb4,0.5)); wSnout.position.set(0.36,-0.028,0); whale.add(wSnout);
+  // mouth seam: thin dark arc under the snout, one per side
+  [-1,1].forEach(function(s){
+    var seam=new THREE.Mesh(new THREE.TorusGeometry(0.085,0.0035,5,14,1.5), new THREE.MeshBasicMaterial({color:0x1c3d55,transparent:true,opacity:0.6,side:THREE.DoubleSide}));
+    seam.position.set(0.345,-0.055,0.082*s); seam.rotation.z=2.6; if(s<0) seam.rotation.y=Math.PI; whale.add(seam);
+  });
+  var wBlow=new THREE.Mesh(new THREE.SphereGeometry(0.016,8,6), mat(0x24506e,0.6)); wBlow.scale.set(1.4,0.35,0.8); wBlow.position.set(0.31,0.155,0); whale.add(wBlow);
+  var wDorsShape=new THREE.Shape(); wDorsShape.moveTo(-0.05,0); wDorsShape.quadraticCurveTo(0.0,0.075,0.055,0.005); wDorsShape.closePath();
+  var wDors=new THREE.Mesh(new THREE.ShapeGeometry(wDorsShape,6), new THREE.MeshStandardMaterial({color:0x3a739e,roughness:0.5,side:THREE.DoubleSide}));
+  wDors.position.set(-0.16,0.145,0); whale.add(wDors);
   var wTail=new THREE.Group(); wTail.position.set(-0.40,0.01,0); whale.add(wTail);
-  var wPedGeo=new THREE.SphereGeometry(0.07,8,6); wPedGeo.scale(1.6,0.8,0.7);
-  var wPed=new THREE.Mesh(wPedGeo, mat(0x4a7fb5,0.5)); wPed.position.x=-0.05; wTail.add(wPed);
-  var wFlukeGeo=new THREE.SphereGeometry(0.11,10,6); wFlukeGeo.scale(0.55,0.10,1.7);
-  var wFluke=new THREE.Mesh(wFlukeGeo, mat(0x3f74a8,0.5)); wFluke.position.x=-0.13; wTail.add(wFluke);
+  var wPedGeo=new THREE.SphereGeometry(0.07,10,8); wPedGeo.scale(1.7,0.75,0.6);
+  wTail.add(new THREE.Mesh(wPedGeo, mat(0x41759f,0.5)));
+  [-1,1].forEach(function(s){ // fluke lobes with a centre notch
+    var lobeGeo=new THREE.SphereGeometry(0.105,12,8); lobeGeo.scale(0.62,0.10,1.05);
+    var lobe=new THREE.Mesh(lobeGeo, mat(0x396f9d,0.5)); lobe.position.set(-0.155,0,0.105*s); lobe.rotation.y=0.35*s; wTail.add(lobe);
+  });
   var wFins=[];
   [-1,1].forEach(function(s){
-    var fGeo=new THREE.SphereGeometry(0.07,8,6); fGeo.scale(1.5,0.18,0.65);
-    var fm=new THREE.Mesh(fGeo, mat(0x4a7fb5,0.5)); fm.position.set(0.12,-0.06,0.15*s); fm.rotation.x=0.5*s; whale.add(fm); wFins.push(fm);
+    var fShape=new THREE.Shape(); fShape.moveTo(0,0); fShape.quadraticCurveTo(-0.13,-0.02,-0.19,-0.075); fShape.quadraticCurveTo(-0.07,-0.075,0.01,-0.035); fShape.closePath();
+    var fg=new THREE.Group(); fg.position.set(0.13,-0.055,0.135*s); fg.rotation.x=0.55*s; fg.userData.baseX=0.55*s;
+    fg.add(new THREE.Mesh(new THREE.ShapeGeometry(fShape,6), new THREE.MeshStandardMaterial({color:0x41759f,roughness:0.5,side:THREE.DoubleSide})));
+    whale.add(fg); wFins.push(fg);
   });
-  var wEyeGeo=new THREE.SphereGeometry(0.013,6,6); var wEyeMat=new THREE.MeshBasicMaterial({color:0x10222e});
-  [-1,1].forEach(function(s){ var e=new THREE.Mesh(wEyeGeo,wEyeMat); e.position.set(0.30,0.02,0.13*s); whale.add(e); });
+  var wEyeGeo=new THREE.SphereGeometry(0.014,8,8); var wEyeMat=new THREE.MeshBasicMaterial({color:0x0d1d29});
+  var wGlintGeo=new THREE.SphereGeometry(0.005,6,6); var wGlintMat=new THREE.MeshBasicMaterial({color:0xffffff});
+  [-1,1].forEach(function(s){
+    var e=new THREE.Mesh(wEyeGeo,wEyeMat); e.position.set(0.315,0.018,0.128*s); whale.add(e);
+    var gl=new THREE.Mesh(wGlintGeo,wGlintMat); gl.position.set(0.322,0.026,0.134*s); whale.add(gl);
+  });
   whale.position.set(0.6,1.6,-1.6); scene.add(whale);
 
   // --- Jellyfish x3: translucent pulsing dome, glowing core, wavy tentacles, vertical drift ---
   var jellies=[];
   function createJelly(color, scale){
     var g=new THREE.Group();
-    var domeMat=new THREE.MeshStandardMaterial({color:color,roughness:0.25,metalness:0,transparent:true,opacity:0.5,emissive:color,emissiveIntensity:0.55,side:THREE.DoubleSide});
-    var dome=new THREE.Mesh(new THREE.SphereGeometry(0.11,22,16,0,Math.PI*2,0,Math.PI*0.55), domeMat); g.add(dome);
-    var core=new THREE.Mesh(new THREE.SphereGeometry(0.05,8,8), new THREE.MeshBasicMaterial({color:color,transparent:true,opacity:0.8}));
-    core.position.y=-0.01; g.add(core);
-    var tentMat=new THREE.MeshStandardMaterial({color:color,roughness:0.4,transparent:true,opacity:0.65,emissive:color,emissiveIntensity:0.35});
+    // Bell v4: outer dome + inner dome + scalloped rim ring + 4 inner organs
+    var bell=new THREE.Group(); g.add(bell);
+    var domeMat=new THREE.MeshStandardMaterial({color:color,roughness:0.22,metalness:0,transparent:true,opacity:0.48,emissive:color,emissiveIntensity:0.55,side:THREE.DoubleSide});
+    var dome=new THREE.Mesh(new THREE.SphereGeometry(0.11,28,20,0,Math.PI*2,0,Math.PI*0.55), domeMat); bell.add(dome);
+    var inner=new THREE.Mesh(new THREE.SphereGeometry(0.082,18,12,0,Math.PI*2,0,Math.PI*0.55), new THREE.MeshStandardMaterial({color:0xffffff,roughness:0.3,transparent:true,opacity:0.20,emissive:color,emissiveIntensity:0.3,side:THREE.DoubleSide}));
+    inner.position.y=-0.008; bell.add(inner);
+    var rimGeo=new THREE.TorusGeometry(0.108,0.007,6,28); rimGeo.rotateX(Math.PI/2);
+    var rim=new THREE.Mesh(rimGeo, new THREE.MeshStandardMaterial({color:color,roughness:0.3,transparent:true,opacity:0.75,emissive:color,emissiveIntensity:0.6}));
+    rim.position.y=0.028; bell.add(rim);
+    var core=new THREE.Group(); core.position.y=0.018; g.add(core);
+    var organCols=[0xffb3d9,0xffd9a0,0xc3b3ff,0xa0f0ff];
+    for(var oi=0;oi<4;oi++){
+      var og=new THREE.Mesh(new THREE.SphereGeometry(0.026,10,8), new THREE.MeshBasicMaterial({color:organCols[oi],transparent:true,opacity:0.85}));
+      var oa=oi/4*Math.PI*2; og.position.set(Math.cos(oa)*0.038,0,Math.sin(oa)*0.038); og.scale.set(1,0.55,1); core.add(og);
+    }
+    var glow=new THREE.Mesh(new THREE.SphereGeometry(0.045,10,8), new THREE.MeshBasicMaterial({color:color,transparent:true,opacity:0.55}));
+    core.add(glow);
+    // Tentacles v4: outer ring of 12 + inner ring of 6, varied lengths
+    var tentMat=new THREE.MeshStandardMaterial({color:color,roughness:0.4,transparent:true,opacity:0.62,emissive:color,emissiveIntensity:0.35});
     var tents=[];
-    for(var ti=0;ti<9;ti++){
-      var tGeo=new THREE.CylinderGeometry(0.004,0.0015,0.24,5); tGeo.translate(0,-0.12,0);
+    for(var ti=0;ti<18;ti++){
+      var innerRing=ti>=12;
+      var len=innerRing?0.15+Math.random()*0.05:0.22+Math.random()*0.11;
+      var tGeo=new THREE.CylinderGeometry(0.0035,0.0012,len,5); tGeo.translate(0,-len/2,0);
       var tm=new THREE.Mesh(tGeo,tentMat);
-      var a=ti/9*Math.PI*2; tm.position.set(Math.cos(a)*0.055,-0.03,Math.sin(a)*0.055);
+      var a=ti/(innerRing?6:12)*Math.PI*2; var rr=innerRing?0.032:0.062;
+      tm.position.set(Math.cos(a)*rr,-0.02,Math.sin(a)*rr);
       g.add(tm); tents.push(tm);
     }
-    var arm=new THREE.Mesh(new THREE.ConeGeometry(0.035,0.16,7), tentMat); arm.position.y=-0.1; arm.rotation.x=Math.PI; g.add(arm); tents.push(arm);
+    // 3 frilly oral arms in the centre
+    for(var ai=0;ai<3;ai++){
+      var armGeo=new THREE.ConeGeometry(0.030,0.19,7,3);
+      var arm=new THREE.Mesh(armGeo, tentMat); var aa=ai/3*Math.PI*2;
+      arm.position.set(Math.cos(aa)*0.02,-0.11,Math.sin(aa)*0.02); arm.rotation.x=Math.PI+(Math.random()-0.5)*0.3; g.add(arm); tents.push(arm);
+    }
     g.scale.setScalar(scale);
-    g.userData={dome:dome,core:core,tents:tents};
+    g.userData={dome:bell,core:core,tents:tents};
     return g;
   }
   [[0x8be9ff,0.35,1.5,-1.0],[0xc39bff,-0.45,1.75,-1.55],[0xff9ad5,0.05,1.3,-0.75]].forEach(function(cfg,idx){
@@ -599,32 +811,45 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
 
   // --- Starfish x5: extruded 5-point stars resting at the bottom, rotating very slowly ---
   var stars=[];
-  function createStar(){
+  var starCols=[0xff8c42,0xff6b81,0xb18cff,0xffb84d,0xff7e5f];
+  function createStar(ci){
     var shape=new THREE.Shape();
     for(var si=0;si<10;si++){
       var ang=si/10*Math.PI*2-Math.PI/2;
-      var rad=si%2===0?0.085:0.036;
+      var rad=si%2===0?0.088:0.037;
       var px=Math.cos(ang)*rad, py=Math.sin(ang)*rad;
       if(si===0) shape.moveTo(px,py); else shape.lineTo(px,py);
     }
     shape.closePath();
-    var geo=new THREE.ExtrudeGeometry(shape,{depth:0.028,bevelEnabled:true,bevelThickness:0.008,bevelSize:0.008,bevelSegments:1});
+    var geo=new THREE.ExtrudeGeometry(shape,{depth:0.028,bevelEnabled:true,bevelThickness:0.009,bevelSize:0.009,bevelSegments:2});
     geo.rotateX(-Math.PI/2);
-    return new THREE.Mesh(geo, mat(0xff8c42,0.85));
+    var grp=new THREE.Group();
+    grp.add(new THREE.Mesh(geo, mat(starCols[ci%starCols.length],0.8)));
+    // raised bumps: centre + one per arm
+    var bumpMat=mat(new THREE.Color(starCols[ci%starCols.length]).lerp(new THREE.Color(0xffffff),0.35),0.75);
+    var centre=new THREE.Mesh(new THREE.SphereGeometry(0.020,8,6), bumpMat); centre.scale.y=0.5; centre.position.y=0.040; grp.add(centre);
+    for(var bi=0;bi<5;bi++){
+      var ba=bi/5*Math.PI*2-Math.PI/2;
+      var bp=new THREE.Mesh(new THREE.SphereGeometry(0.011,7,5), bumpMat); bp.scale.y=0.55;
+      bp.position.set(Math.cos(ba)*0.052,0.042,Math.sin(ba)*0.052); grp.add(bp);
+      var bp2=new THREE.Mesh(new THREE.SphereGeometry(0.008,6,5), bumpMat); bp2.scale.y=0.55;
+      bp2.position.set(Math.cos(ba)*0.075,0.034,Math.sin(ba)*0.075); grp.add(bp2);
+    }
+    return grp;
   }
   [[-0.7,-0.8],[0.55,-1.75],[0.85,-0.95],[-0.25,-1.9],[0.1,-0.62]].forEach(function(p,idx){
-    var s=createStar(); s.position.set(p[0],0.575,p[1]); s.rotation.y=idx*1.3; scene.add(s); anchoredDecor.push({obj:s, base:s.position.clone()});
+    var s=createStar(idx); s.position.set(p[0],0.575,p[1]); s.rotation.y=idx*1.3; scene.add(s); anchoredDecor.push({obj:s, base:s.position.clone()});
     stars.push({obj:s, speed:0.03+idx*0.008});
   });
 
   // --- Bubbles: 84 spheres, Points-like perf using small meshes pooled ---
-  var bubbleMat=new THREE.MeshBasicMaterial({color:0xdffaff,transparent:true,opacity:0.5});
-  var bubbleGeo=new THREE.SphereGeometry(0.018,6,6);
+  var bubbleMat=new THREE.MeshStandardMaterial({color:0xeafcff,roughness:0.06,metalness:0.1,transparent:true,opacity:0.38});
+  var bubbleGeo=new THREE.SphereGeometry(0.018,10,8);
   for(var b=0;b<84;b++){
     var bm=new THREE.Mesh(bubbleGeo,bubbleMat);
     bm.position.set((Math.random()-0.5)*1.6, 0.55+Math.random()*1.5, -1.2+(Math.random()-0.5)*1.1);
     var s=0.5+Math.random()*1.3; bm.scale.setScalar(s);
-    scene.add(bm); bubbles.push({obj:bm, speed:0.12+Math.random()*0.28, drift:Math.random()*10});
+    scene.add(bm); bubbles.push({obj:bm, baseScale:s, speed:0.12+Math.random()*0.28, drift:Math.random()*10});
   }
 
   // --- Plankton glow particles ---
@@ -633,30 +858,107 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   var pGeo=new THREE.BufferGeometry(); pGeo.setAttribute('position', new THREE.BufferAttribute(pPos,3));
   var plankton=new THREE.Points(pGeo, new THREE.PointsMaterial({color:0xaef4ff,size:0.018,transparent:true,opacity:0.75}));
   scene.add(plankton); anchoredDecor.push({obj:plankton, base:new THREE.Vector3(0,0,0)});
+  // Soft bokeh motes: fewer, larger, warm/cool mix, additive so they glow faintly
+  var p2Count=90, p2Pos=new Float32Array(p2Count*3), p2Col=new Float32Array(p2Count*3);
+  var moteCols=[new THREE.Color(0xbdf3ff),new THREE.Color(0xfff2c8),new THREE.Color(0xd8c8ff)];
+  for(var q=0;q<p2Count;q++){ p2Pos[q*3]=(Math.random()-0.5)*2.8; p2Pos[q*3+1]=0.45+Math.random()*1.9; p2Pos[q*3+2]=-1.2+(Math.random()-0.5)*1.9; var mc=moteCols[q%3]; p2Col[q*3]=mc.r; p2Col[q*3+1]=mc.g; p2Col[q*3+2]=mc.b; }
+  var p2Geo=new THREE.BufferGeometry(); p2Geo.setAttribute('position', new THREE.BufferAttribute(p2Pos,3)); p2Geo.setAttribute('color', new THREE.BufferAttribute(p2Col,3));
+  var motes=new THREE.Points(p2Geo, new THREE.PointsMaterial({size:0.045,vertexColors:true,transparent:true,opacity:0.42,blending:THREE.AdditiveBlending,depthWrite:false}));
+  scene.add(motes); anchoredDecor.push({obj:motes, base:new THREE.Vector3(0,0,0)});
 
   // --- Seaweed & coral at bottom (y ~0.55 in preview, floats below fish) ---
-  var weedMat=mat(0x1db584,0.7), weedMat2=mat(0x0ea47a,0.7);
-  for(var w=0;w<16;w++){
-    var h=0.28+Math.random()*0.35;
-    var weed=new THREE.Mesh(new THREE.CylinderGeometry(0.008,0.016,h,5), w%2?weedMat:weedMat2);
+  var weedMat=mat(0x1db584,0.65), weedMat2=mat(0x0ea47a,0.65);
+  for(var w=0;w<14;w++){
+    var h=0.28+Math.random()*0.38;
+    // Bent blade-stem: cylinder with a gentle S-curve baked into the vertices
+    var wGeo=new THREE.CylinderGeometry(0.007,0.016,h,5,6);
+    var wPos=wGeo.attributes.position;
+    for(var wv2=0;wv2<wPos.count;wv2++){ var yn=(wPos.getY(wv2)+h/2)/h; wPos.setX(wv2, wPos.getX(wv2)+Math.sin(yn*2.2)*0.045*yn); }
+    wGeo.computeVertexNormals();
+    var weed=new THREE.Mesh(wGeo, w%2?weedMat:weedMat2);
     weed.position.set((Math.random()-0.5)*1.7, 0.55+h/2, -1.2+(Math.random()-0.5)*1.1);
     scene.add(weed); weeds.push({obj:weed, phase:Math.random()*10, h:h}); anchoredDecor.push({obj:weed, base:weed.position.clone()});
   }
+  // Broad kelp leaves: bent planes that ripple in the current
+  var kelpMat=new THREE.MeshStandardMaterial({color:0x2fbf71,roughness:0.6,side:THREE.DoubleSide,transparent:true,opacity:0.92});
+  var kelps=[];
+  for(var kw=0;kw<7;kw++){
+    var kh=0.35+Math.random()*0.3;
+    var kGeo=new THREE.PlaneGeometry(0.055,kh,1,6);
+    var kPos=kGeo.attributes.position;
+    for(var kv=0;kv<kPos.count;kv++){ var kn=(kPos.getY(kv)+kh/2)/kh; kPos.setZ(kv, Math.sin(kn*3.0)*0.05*kn); }
+    kGeo.computeVertexNormals();
+    var kelp=new THREE.Mesh(kGeo, kelpMat);
+    kelp.position.set((Math.random()-0.5)*1.6, 0.55+kh/2, -1.2+(Math.random()-0.5)*1.0);
+    kelp.rotation.y=Math.random()*Math.PI;
+    scene.add(kelp); kelps.push({obj:kelp, phase:Math.random()*10}); anchoredDecor.push({obj:kelp, base:kelp.position.clone()});
+  }
+  // Corals v4: three growth forms — staghorn branches, anemones, brain/fan mounds
   var coralCols=[0xff7a9e,0xff9a3d,0xff6b6b];
+  var anemoneTents=[];
   for(var ci=0;ci<9;ci++){
     var coral=new THREE.Group();
     var cc=coralCols[ci%3];
-    for(var br=0;br<3;br++){
-      var branch=new THREE.Mesh(new THREE.ConeGeometry(0.03,0.14+Math.random()*0.1,6), mat(cc,0.6));
-      branch.position.set((Math.random()-0.5)*0.07,0.07, (Math.random()-0.5)*0.07);
-      branch.rotation.z=(Math.random()-0.5)*0.7; coral.add(branch);
+    var kind=ci%3;
+    if(kind===0){ // staghorn: 5 tapered branches with lighter tip buds
+      for(var br=0;br<5;br++){
+        var bh=0.12+Math.random()*0.11;
+        var branch=new THREE.Mesh(new THREE.CylinderGeometry(0.008,0.026,bh,6), mat(cc,0.6));
+        branch.position.set((Math.random()-0.5)*0.08,bh/2,(Math.random()-0.5)*0.08);
+        branch.rotation.z=(Math.random()-0.5)*0.8; branch.rotation.x=(Math.random()-0.5)*0.8; coral.add(branch);
+        var tip=new THREE.Mesh(new THREE.SphereGeometry(0.013,7,6), mat(new THREE.Color(cc).lerp(new THREE.Color(0xffffff),0.45),0.5));
+        tip.position.set(branch.position.x+Math.sin(branch.rotation.z)*-bh*0.4, bh*0.95, branch.position.z); coral.add(tip);
+      }
+      var baseR=new THREE.Mesh(new THREE.SphereGeometry(0.05,10,7), mat(0x9a7b68,0.8)); baseR.scale.y=0.55; coral.add(baseR);
+    } else if(kind===1){ // anemone: squat base + a crown of waving tentacles
+      var abase=new THREE.Mesh(new THREE.CylinderGeometry(0.045,0.06,0.07,10), mat(new THREE.Color(cc).lerp(new THREE.Color(0x662244),0.35),0.65));
+      abase.position.y=0.035; coral.add(abase);
+      var tentMat2=new THREE.MeshStandardMaterial({color:cc,roughness:0.45,transparent:true,opacity:0.9,emissive:cc,emissiveIntensity:0.18});
+      for(var at=0;at<11;at++){
+        var ag2=at/11*Math.PI*2;
+        var tg2=new THREE.Group(); tg2.position.set(Math.cos(ag2)*0.030,0.07,Math.sin(ag2)*0.030);
+        var tm2=new THREE.Mesh(new THREE.CylinderGeometry(0.0035,0.006,0.085,5), tentMat2); tm2.position.y=0.042; tg2.add(tm2);
+        var tt=new THREE.Mesh(new THREE.SphereGeometry(0.008,7,6), mat(new THREE.Color(cc).lerp(new THREE.Color(0xffffff),0.5),0.4)); tt.position.y=0.087; tg2.add(tt);
+        tg2.rotation.x=Math.cos(ag2)*0.38; tg2.rotation.z=-Math.sin(ag2)*0.38;
+        coral.add(tg2); anemoneTents.push({grp:tg2, bx:tg2.rotation.x, bz:tg2.rotation.z, phase:Math.random()*10});
+      }
+    } else { // brain mound: ribbed half-dome
+      var mound=new THREE.Mesh(new THREE.SphereGeometry(0.075,16,12), mat(cc,0.75)); mound.scale.y=0.62; mound.position.y=0.01; coral.add(mound);
+      for(var rg=0;rg<3;rg++){
+        var ringGeo=new THREE.TorusGeometry(0.062-rg*0.016,0.005,5,20); ringGeo.rotateX(Math.PI/2);
+        var ring=new THREE.Mesh(ringGeo, mat(new THREE.Color(cc).lerp(new THREE.Color(0x000000),0.18),0.8));
+        ring.position.y=0.028+rg*0.020; ring.scale.set(1,1,0.7); coral.add(ring);
+      }
     }
     coral.position.set((Math.random()-0.5)*1.6,0.56,-1.2+(Math.random()-0.5)*1.0);
     scene.add(coral); corals.push(coral); anchoredDecor.push({obj:coral, base:coral.position.clone()});
   }
-  // Soft floor disc to anchor in preview (very transparent)
-  var disc=new THREE.Mesh(new THREE.CircleGeometry(1.05,28), new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.10,side:THREE.DoubleSide}));
+  // Floor disc v4: procedural sandy caustics texture (canvas), slow drift
+  var causticTex=null;
+  try{
+    var cv=document.createElement('canvas'); cv.width=cv.height=256;
+    var cx2=cv.getContext('2d');
+    cx2.fillStyle='#7fc8bc'; cx2.fillRect(0,0,256,256);
+    for(var sp=0;sp<900;sp++){ cx2.fillStyle='rgba('+(40+Math.random()*60|0)+','+(120+Math.random()*60|0)+','+(130+Math.random()*50|0)+',0.25)'; cx2.fillRect(Math.random()*256,Math.random()*256,2,2); }
+    cx2.strokeStyle='rgba(255,255,240,0.5)'; cx2.lineWidth=1.4;
+    for(var ln=0;ln<46;ln++){ cx2.beginPath(); var lx=Math.random()*256, ly=Math.random()*256; cx2.moveTo(lx,ly);
+      for(var sg=0;sg<4;sg++){ lx+=(Math.random()-0.5)*52; ly+=(Math.random()-0.5)*52; cx2.lineTo(lx,ly); } cx2.stroke(); }
+    causticTex=new THREE.CanvasTexture(cv); causticTex.wrapS=causticTex.wrapT=THREE.RepeatWrapping;
+  }catch(e){}
+  var discMat=new THREE.MeshBasicMaterial({transparent:true,opacity:0.20,side:THREE.DoubleSide});
+  if(causticTex) discMat.map=causticTex;
+  else discMat.color=new THREE.Color(0xffffff);
+  var disc=new THREE.Mesh(new THREE.CircleGeometry(1.05,32), discMat);
   disc.rotation.x=-Math.PI/2; disc.position.set(0,0.54,-1.2); scene.add(disc); anchoredDecor.push({obj:disc, base:disc.position.clone()});
+  // Light shafts: 3 soft additive cones from above (subtle in AR, pretty in preview)
+  var shaftMats=[]; var shaftGroup=new THREE.Group();
+  [[-0.5,0.20,0.16],[0.15,0.28,0.10],[0.7,0.18,0.22]].forEach(function(sc){
+    var sm=new THREE.MeshBasicMaterial({color:0xbdf3ff,transparent:true,opacity:0.055,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide});
+    var cone=new THREE.Mesh(new THREE.ConeGeometry(sc[1],2.4,14,1,true), sm);
+    cone.position.set(sc[0],1.35,-1.2+ (sc[0]*0.3)); cone.rotation.z=sc[2];
+    shaftGroup.add(cone); shaftMats.push(sm);
+  });
+  scene.add(shaftGroup); anchoredDecor.push({obj:shaftGroup, base:new THREE.Vector3(0,0,0)});
 
   clock=new THREE.Clock();
   resize();
@@ -718,8 +1020,8 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
   var toggleBtn=document.getElementById('toggleLight');
   toggleBtn.addEventListener('click',function(){
     isDusk=!isDusk; stage.classList.toggle('dusk',isDusk);
-    if(isDusk){ ambient.color.set(0xffc9a3); ambient.intensity=0.75; sun.color.set(0xff9a5c); sun.intensity=0.9; fill.color.set(0xb78bff); toggleBtn.textContent='☀️ 切换白天'; }
-    else{ ambient.color.set(0xbfefff); ambient.intensity=0.95; sun.color.set(0xffffff); sun.intensity=1.15; fill.color.set(0x66d9e8); toggleBtn.textContent='🌇 切换黄昏'; }
+    if(isDusk){ ambient.color.set(0xffc9a3); ambient.intensity=0.75; sun.color.set(0xff9a5c); sun.intensity=0.9; fill.color.set(0xb78bff); shaftMats.forEach(function(sm){ sm.color.set(0xffc9a3); }); toggleBtn.textContent='☀️ 切换白天'; }
+    else{ ambient.color.set(0xbfefff); ambient.intensity=0.95; sun.color.set(0xffffff); sun.intensity=1.15; fill.color.set(0x66d9e8); shaftMats.forEach(function(sm){ sm.color.set(0xbdf3ff); }); toggleBtn.textContent='🌇 切换黄昏'; }
   });
 
   // --- Room size buttons + boundary box toggle ---
@@ -1072,10 +1374,40 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
       if(dist>0.01){ var look=tmpV.copy(fh.obj.position).add(tmpV2); fh.obj.lookAt(look); }
       // tail wiggle
       if(fh.tail){ fh.tail.rotation.y=Math.sin(t*10+fh.wobble)*0.55; fh.tail.rotation.x=Math.sin(t*10+fh.wobble)*0.12; }
+      if(fh.spine){ fh.spine.rotation.y=Math.sin(t*10+fh.wobble-0.85)*0.11; fh.spine.rotation.z=Math.sin(t*5+fh.wobble)*0.03; }
       if(fh.fins){ fh.fins.forEach(function(fn,fi2){ fn.rotation.x=fn.userData.baseX+Math.sin(t*6+fh.wobble+fi2*Math.PI)*0.35; }); }
       fh.obj.position.y+=Math.sin(t*2+fh.wobble)*0.0007;
       clampToBox(fh.obj.position,0.04); // hard guarantee: never outside the box
     });
+
+    // Tetra school: one shared path, formation offsets rotated by heading,
+    // so the whole school banks through turns as a single body
+    {
+      var scDt=0.3;
+      var sP=function(tt){ return new THREE.Vector3(AC.x+Math.cos(tt*0.22)*0.74, AC.y-0.14+Math.sin(tt*0.7)*0.13, AC.z+Math.sin(tt*0.22)*0.56); };
+      var sC=sP(t), sN=sP(t+scDt);
+      var sDir=sN.clone().sub(sC);
+      var sYaw=Math.atan2(-sDir.z, sDir.x);
+      tetras.forEach(function(te){
+        var off=te.off.clone(); off.applyAxisAngle(new THREE.Vector3(0,1,0), -sYaw);
+        te.obj.position.copy(sC).add(off);
+        te.obj.position.y+=Math.sin(t*3+te.phase)*0.006;
+        clampToBox(te.obj.position,0.05);
+        tmpV.copy(te.obj.position).add(sDir); te.obj.lookAt(tmpV);
+        if(te.tail) te.tail.rotation.y=Math.sin(t*16+te.phase)*0.5;
+      });
+      // Angelfish: slow glides on wide ellipses, gentle banking roll
+      angels.forEach(function(an){
+        var aa=t*an.speed*an.dir+an.phase;
+        an.obj.position.set(AC.x+Math.cos(aa)*an.radius, AC.y+an.relY+Math.sin(t*0.5+an.phase)*0.07, AC.z+Math.sin(aa)*an.radius*0.68);
+        clampToBox(an.obj.position,0.18);
+        var an2=(t+0.35)*an.speed*an.dir+an.phase;
+        tmpV.set(AC.x+Math.cos(an2)*an.radius, an.obj.position.y, AC.z+Math.sin(an2)*an.radius*0.68);
+        an.obj.lookAt(tmpV);
+        if(an.tail) an.tail.rotation.y=Math.sin(t*3.2+an.phase)*0.38;
+        if(an.spine) an.spine.rotation.z=Math.sin(t*1.7+an.phase)*0.13;
+      });
+    }
 
     // Turtles: slow circles + flipper paddle, kept inside the box
     turtles.forEach(function(tu){
@@ -1086,6 +1418,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
       tmpV.set(AC.x+Math.cos(na)*tu.radius, tu.obj.position.y, AC.z+Math.sin(na)*tu.radius*0.72);
       tu.obj.lookAt(tmpV);
       tu.flippers.forEach(function(fl,i){ fl.rotation.z=Math.sin(t*2.2+tu.phase+i*1.2)*0.45; });
+      if(tu.head){ tu.head.position.x=0.28+Math.sin(t*1.1+tu.phase)*0.010; tu.head.rotation.z=Math.sin(t*0.9+tu.phase)*0.06; }
     });
 
     // Whale: slow grand circle, gentle rise & sink, tail fluke beats up/down
@@ -1122,6 +1455,7 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
       gf.obj.position.addScaledVector(gf.vel, dt);
       tmpV.copy(gf.obj.position).add(gf.vel); gf.obj.lookAt(tmpV);
       if(gf.tail) gf.tail.rotation.y=Math.sin(t*14+gf.phase)*0.6;
+      if(gf.obj.userData.spine) gf.obj.userData.spine.rotation.y=Math.sin(t*14+gf.phase-0.8)*0.12;
       var op=0.85*Math.min(1, Math.max(0,gf.life)/1.1);
       gf.obj.traverse(function(ch){ if(ch.isMesh) ch.material.opacity=op; });
       if(gf.life<=0){ scene.remove(gf.obj); gestureFish.splice(gi,1); }
@@ -1140,11 +1474,17 @@ footer{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
     }
 
     // Bubbles rise & loop
-    bubbles.forEach(function(bb){ bb.obj.position.y+=bb.speed*dt; bb.obj.position.x+=Math.sin(t*1.5+bb.drift)*0.0008; if(bb.obj.position.y>AC.y+0.85){ bb.obj.position.y=AC.y-0.82; bb.obj.position.x=AC.x+(Math.random()-0.5)*1.6; bb.obj.position.z=AC.z+(Math.random()-0.5)*1.1; } });
+    bubbles.forEach(function(bb){ bb.obj.scale.setScalar(bb.baseScale*(1+0.13*Math.sin(t*3.1+bb.drift))); bb.obj.position.y+=bb.speed*dt; bb.obj.position.x+=Math.sin(t*1.5+bb.drift)*0.0008; if(bb.obj.position.y>AC.y+0.85){ bb.obj.position.y=AC.y-0.82; bb.obj.position.x=AC.x+(Math.random()-0.5)*1.6; bb.obj.position.z=AC.z+(Math.random()-0.5)*1.1; } });
     // Plankton drift
     plankton.rotation.y=t*0.02; plankton.position.y=Math.sin(t*0.4)*0.03;
+    motes.rotation.y=-t*0.013; motes.position.y=Math.cos(t*0.3)*0.04;
+    if(causticTex){ causticTex.offset.set((t*0.008)%1,(t*0.005)%1); }
+    shaftMats.forEach(function(sm,si2){ sm.opacity=(isDusk?0.034:0.052)+0.016*Math.sin(t*0.5+si2*1.7); });
+    shaftGroup.rotation.y=Math.sin(t*0.05)*0.05;
     // Seaweed sway
     weeds.forEach(function(wd){ wd.obj.rotation.z=Math.sin(t*1.3+wd.phase)*0.18; wd.obj.rotation.x=Math.cos(t*1.1+wd.phase)*0.08; });
+    kelps.forEach(function(kp){ kp.obj.rotation.z=Math.sin(t*1.6+kp.phase)*0.22; kp.obj.rotation.x=Math.cos(t*1.15+kp.phase)*0.10; });
+    anemoneTents.forEach(function(at2){ at2.grp.rotation.x=at2.bx+Math.sin(t*1.9+at2.phase)*0.15; at2.grp.rotation.z=at2.bz+Math.cos(t*1.6+at2.phase)*0.15; });
 
     renderer.render(scene,camera);
   }
